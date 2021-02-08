@@ -13,6 +13,10 @@
 		D3D092F625D104E400CB56CA /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092F525D104E400CB56CA /* TODO.swift */; };
 		D3D0930425D1062100CB56CA /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0930225D1062100CB56CA /* PhotosViewController.swift */; };
 		D3D0930525D1062100CB56CA /* PhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3D0930325D1062100CB56CA /* PhotosViewController.xib */; };
+		D3D0931725D1175B00CB56CA /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0931625D1175B00CB56CA /* CoordinatorType.swift */; };
+		D3D0931B25D1188400CB56CA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0931A25D1188400CB56CA /* AppCoordinator.swift */; };
+		D3D0931E25D118DE00CB56CA /* PhotosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0931D25D118DE00CB56CA /* PhotosCoordinator.swift */; };
+		D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		D3D092F525D104E400CB56CA /* TODO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
 		D3D0930225D1062100CB56CA /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D3D0930325D1062100CB56CA /* PhotosViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotosViewController.xib; sourceTree = "<group>"; };
+		D3D0931625D1175B00CB56CA /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
+		D3D0931A25D1188400CB56CA /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		D3D0931D25D118DE00CB56CA /* PhotosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCoordinator.swift; sourceTree = "<group>"; };
+		D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,7 @@
 		D3D092DE25D1031000CB56CA /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0932125D11A5B00CB56CA /* Extension */,
 				D3D0930825D108D100CB56CA /* Service */,
 				D3D0930A25D108ED00CB56CA /* Scene */,
 			);
@@ -77,6 +86,7 @@
 		D3D0930A25D108ED00CB56CA /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0931525D1172100CB56CA /* Coordinator */,
 				D3D0930C25D108FB00CB56CA /* ViewController */,
 			);
 			path = Scene;
@@ -97,6 +107,24 @@
 				D3D0930325D1062100CB56CA /* PhotosViewController.xib */,
 			);
 			path = PhotosViewController;
+			sourceTree = "<group>";
+		};
+		D3D0931525D1172100CB56CA /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0931625D1175B00CB56CA /* CoordinatorType.swift */,
+				D3D0931A25D1188400CB56CA /* AppCoordinator.swift */,
+				D3D0931D25D118DE00CB56CA /* PhotosCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		D3D0932125D11A5B00CB56CA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +199,10 @@
 			files = (
 				D3D092E025D1031000CB56CA /* AppDelegate.swift in Sources */,
 				D3D0930425D1062100CB56CA /* PhotosViewController.swift in Sources */,
+				D3D0931B25D1188400CB56CA /* AppCoordinator.swift in Sources */,
+				D3D0931E25D118DE00CB56CA /* PhotosCoordinator.swift in Sources */,
+				D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */,
+				D3D0931725D1175B00CB56CA /* CoordinatorType.swift in Sources */,
 				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

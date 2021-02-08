@@ -11,14 +11,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var coordinator: AppCoordinator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        window = UIWindow()
-        let mainVC = PhotosViewController(nibName: "PhotosViewController", bundle: nil)
-        let navigationVC = UINavigationController(rootViewController: mainVC)
-        window?.rootViewController = navigationVC
-        window?.makeKeyAndVisible()
+        let coordinator = AppCoordinator()
+        coordinator.start()
+        self.coordinator = coordinator
+        
+        let window = UIWindow()
+        window.rootViewController = coordinator.navigationController
+        window.makeKeyAndVisible()
+        self.window = window
         
         return true
     }

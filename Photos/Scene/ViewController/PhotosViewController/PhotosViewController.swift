@@ -8,6 +8,7 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
+    weak var coordinator: PhotosCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
