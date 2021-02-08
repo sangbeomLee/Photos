@@ -17,6 +17,8 @@
 		D3D0931B25D1188400CB56CA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0931A25D1188400CB56CA /* AppCoordinator.swift */; };
 		D3D0931E25D118DE00CB56CA /* PhotosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0931D25D118DE00CB56CA /* PhotosCoordinator.swift */; };
 		D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */; };
+		D3D0932C25D120C300CB56CA /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */; };
+		D3D0932D25D120C300CB56CA /* PhotosTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		D3D0931A25D1188400CB56CA /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		D3D0931D25D118DE00CB56CA /* PhotosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCoordinator.swift; sourceTree = "<group>"; };
 		D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotosTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 		D3D0930A25D108ED00CB56CA /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0932825D1205D00CB56CA /* View */,
 				D3D0931525D1172100CB56CA /* Coordinator */,
 				D3D0930C25D108FB00CB56CA /* ViewController */,
 			);
@@ -125,6 +130,23 @@
 				D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		D3D0932825D1205D00CB56CA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0932925D1206300CB56CA /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D3D0932925D1206300CB56CA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */,
+				D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +206,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D0932D25D120C300CB56CA /* PhotosTableViewCell.xib in Resources */,
 				D3D0930525D1062100CB56CA /* PhotosViewController.xib in Resources */,
 				D3D092EC25D1031200CB56CA /* LaunchScreen.storyboard in Resources */,
 				D3D092E925D1031200CB56CA /* Assets.xcassets in Resources */,
@@ -201,6 +224,7 @@
 				D3D0930425D1062100CB56CA /* PhotosViewController.swift in Sources */,
 				D3D0931B25D1188400CB56CA /* AppCoordinator.swift in Sources */,
 				D3D0931E25D118DE00CB56CA /* PhotosCoordinator.swift in Sources */,
+				D3D0932C25D120C300CB56CA /* PhotosTableViewCell.swift in Sources */,
 				D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */,
 				D3D0931725D1175B00CB56CA /* CoordinatorType.swift in Sources */,
 				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
