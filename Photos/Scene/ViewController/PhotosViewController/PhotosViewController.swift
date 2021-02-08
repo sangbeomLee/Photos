@@ -12,16 +12,23 @@ class PhotosViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    // TODO: - Storage 만들어 관리하기
+    var photos: [PhotosModel] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+        setupView()
+        fetchData()
     }
-
 }
 
 private extension PhotosViewController {
-    func setup() {
+    func setupView() {
         setupNavigation()
         setupTableView()
     }
@@ -45,13 +52,26 @@ private extension PhotosViewController {
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
     }
+    
+    func fetchData() {
+        PhotoAPIProvider.shared.fetchPhotos {[weak self] result in
+            switch result {
+            case .success(let photos):
+                self?.photos = photos
+            case .failure(let error):
+                // TODO: - Error 처리
+                print(error)
+            }
+        }
+    }
 }
+
 
 extension PhotosViewController: UITableViewDelegate {}
 
 extension PhotosViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,6 +79,7 @@ extension PhotosViewController: UITableViewDataSource {
             // TODO: 오류처리
             return UITableViewCell()
         }
+        // TODO: - 데이터 받아오면 configure 해주기
         
         cell.titleLabel.text = String(indexPath.row)
         

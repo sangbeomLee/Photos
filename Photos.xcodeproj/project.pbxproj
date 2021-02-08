@@ -19,6 +19,11 @@
 		D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */; };
 		D3D0932C25D120C300CB56CA /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */; };
 		D3D0932D25D120C300CB56CA /* PhotosTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */; };
+		D3D0933225D12B0100CB56CA /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933125D12B0100CB56CA /* Downloader.swift */; };
+		D3D0933625D12BC500CB56CA /* PhotoAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933525D12BC500CB56CA /* PhotoAPIProvider.swift */; };
+		D3D0933B25D134FC00CB56CA /* PhotosResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933A25D134FC00CB56CA /* PhotosResponse.swift */; };
+		D3D0933E25D15AAC00CB56CA /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933D25D15AAC00CB56CA /* PhotosModel.swift */; };
+		D3D0934125D1637700CB56CA /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0934025D1637700CB56CA /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,11 @@
 		D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotosTableViewCell.xib; sourceTree = "<group>"; };
+		D3D0933125D12B0100CB56CA /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		D3D0933525D12BC500CB56CA /* PhotoAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAPIProvider.swift; sourceTree = "<group>"; };
+		D3D0933A25D134FC00CB56CA /* PhotosResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosResponse.swift; sourceTree = "<group>"; };
+		D3D0933D25D15AAC00CB56CA /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
+		D3D0934025D1637700CB56CA /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +78,8 @@
 		D3D092DE25D1031000CB56CA /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0933925D134E500CB56CA /* Model */,
+				D3D0933025D12A6B00CB56CA /* Networking */,
 				D3D0932125D11A5B00CB56CA /* Extension */,
 				D3D0930825D108D100CB56CA /* Service */,
 				D3D0930A25D108ED00CB56CA /* Scene */,
@@ -149,6 +161,25 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		D3D0933025D12A6B00CB56CA /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0933125D12B0100CB56CA /* Downloader.swift */,
+				D3D0933525D12BC500CB56CA /* PhotoAPIProvider.swift */,
+				D3D0934025D1637700CB56CA /* APIKey.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		D3D0933925D134E500CB56CA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0933A25D134FC00CB56CA /* PhotosResponse.swift */,
+				D3D0933D25D15AAC00CB56CA /* PhotosModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -222,12 +253,17 @@
 			files = (
 				D3D092E025D1031000CB56CA /* AppDelegate.swift in Sources */,
 				D3D0930425D1062100CB56CA /* PhotosViewController.swift in Sources */,
+				D3D0933E25D15AAC00CB56CA /* PhotosModel.swift in Sources */,
 				D3D0931B25D1188400CB56CA /* AppCoordinator.swift in Sources */,
 				D3D0931E25D118DE00CB56CA /* PhotosCoordinator.swift in Sources */,
+				D3D0933B25D134FC00CB56CA /* PhotosResponse.swift in Sources */,
 				D3D0932C25D120C300CB56CA /* PhotosTableViewCell.swift in Sources */,
+				D3D0933225D12B0100CB56CA /* Downloader.swift in Sources */,
 				D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */,
 				D3D0931725D1175B00CB56CA /* CoordinatorType.swift in Sources */,
+				D3D0934125D1637700CB56CA /* APIKey.swift in Sources */,
 				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
+				D3D0933625D12BC500CB56CA /* PhotoAPIProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
