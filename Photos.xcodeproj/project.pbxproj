@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		D3D092E025D1031000CB56CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092DF25D1031000CB56CA /* AppDelegate.swift */; };
-		D3D092E225D1031000CB56CA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092E125D1031000CB56CA /* SceneDelegate.swift */; };
-		D3D092E425D1031000CB56CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092E325D1031000CB56CA /* ViewController.swift */; };
-		D3D092E725D1031000CB56CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D092E525D1031000CB56CA /* Main.storyboard */; };
 		D3D092E925D1031200CB56CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3D092E825D1031200CB56CA /* Assets.xcassets */; };
 		D3D092EC25D1031200CB56CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D092EA25D1031200CB56CA /* LaunchScreen.storyboard */; };
+		D3D092F625D104E400CB56CA /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092F525D104E400CB56CA /* TODO.swift */; };
+		D3D0930425D1062100CB56CA /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0930225D1062100CB56CA /* PhotosViewController.swift */; };
+		D3D0930525D1062100CB56CA /* PhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3D0930325D1062100CB56CA /* PhotosViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D3D092DC25D1031000CB56CA /* Photos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D092DF25D1031000CB56CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D3D092E125D1031000CB56CA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D3D092E325D1031000CB56CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D3D092E625D1031000CB56CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3D092E825D1031200CB56CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3D092EB25D1031200CB56CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3D092ED25D1031200CB56CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3D092F525D104E400CB56CA /* TODO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
+		D3D0930225D1062100CB56CA /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		D3D0930325D1062100CB56CA /* PhotosViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotosViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +56,47 @@
 		D3D092DE25D1031000CB56CA /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0930825D108D100CB56CA /* Service */,
+				D3D0930A25D108ED00CB56CA /* Scene */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		D3D0930825D108D100CB56CA /* Service */ = {
+			isa = PBXGroup;
+			children = (
 				D3D092DF25D1031000CB56CA /* AppDelegate.swift */,
-				D3D092E125D1031000CB56CA /* SceneDelegate.swift */,
-				D3D092E325D1031000CB56CA /* ViewController.swift */,
-				D3D092E525D1031000CB56CA /* Main.storyboard */,
 				D3D092E825D1031200CB56CA /* Assets.xcassets */,
 				D3D092EA25D1031200CB56CA /* LaunchScreen.storyboard */,
 				D3D092ED25D1031200CB56CA /* Info.plist */,
+				D3D092F525D104E400CB56CA /* TODO.swift */,
 			);
-			path = Photos;
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D3D0930A25D108ED00CB56CA /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0930C25D108FB00CB56CA /* ViewController */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		D3D0930C25D108FB00CB56CA /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0930F25D1091F00CB56CA /* PhotosViewController */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D3D0930F25D1091F00CB56CA /* PhotosViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3D0930225D1062100CB56CA /* PhotosViewController.swift */,
+				D3D0930325D1062100CB56CA /* PhotosViewController.xib */,
+			);
+			path = PhotosViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +156,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D0930525D1062100CB56CA /* PhotosViewController.xib in Resources */,
 				D3D092EC25D1031200CB56CA /* LaunchScreen.storyboard in Resources */,
 				D3D092E925D1031200CB56CA /* Assets.xcassets in Resources */,
-				D3D092E725D1031000CB56CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,23 +169,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3D092E425D1031000CB56CA /* ViewController.swift in Sources */,
 				D3D092E025D1031000CB56CA /* AppDelegate.swift in Sources */,
-				D3D092E225D1031000CB56CA /* SceneDelegate.swift in Sources */,
+				D3D0930425D1062100CB56CA /* PhotosViewController.swift in Sources */,
+				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D3D092E525D1031000CB56CA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D3D092E625D1031000CB56CA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D3D092EA25D1031200CB56CA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -216,7 +240,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +295,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -288,7 +312,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UW7Y2DJ8R6;
-				INFOPLIST_FILE = Photos/Info.plist;
+				INFOPLIST_FILE = Photos/Service/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,7 +331,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UW7Y2DJ8R6;
-				INFOPLIST_FILE = Photos/Info.plist;
+				INFOPLIST_FILE = Photos/Service/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
