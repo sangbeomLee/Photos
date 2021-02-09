@@ -1,13 +1,12 @@
 //
-//  PhotosCoordinator.swift
+//  SearchCoordinator.swift
 //  Photos
 //
-//  Created by 이상범 on 2021/02/08.
+//  Created by 이상범 on 2021/02/09.
 //
-
 import UIKit
 
-class PhotosCoordinator: CoordinatorType {
+class PhotoSearchCoordinator: CoordinatorType {
     weak var parantCoordinator: CoordinatorType?
     var childCoordinators: [CoordinatorType]?
     var navigationController: UINavigationController?
@@ -17,20 +16,12 @@ class PhotosCoordinator: CoordinatorType {
         childCoordinators = [CoordinatorType]()
     }
     
-    deinit {
-        print("gone")
-    }
-    
     func start() {
-        guard let photosViewController = PhotosViewController.instantiatingFromNib() else {
-            // TODO: Error 처리
-            print("error: PhotosCoordinator Error")
-            return
-        }
+        let photoSearchViewController = PhotoSearchViewController()
+        photoSearchViewController.coordinator = self
         
-        photosViewController.coordinator = self
-        
-        navigationController?.pushViewController(photosViewController, animated: true)
+        // TODO: - modal 방식의 변화
+        navigationController?.pushViewController(photoSearchViewController, animated: true)
     }
     
     // TODO: - ChildCoordinator 삭제요망

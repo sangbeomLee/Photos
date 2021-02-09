@@ -13,7 +13,7 @@ class AppCoordinator: CoordinatorType {
     var navigationController: UINavigationController? = UINavigationController()
     
     func start() {
-        let childCoordinator = PhotosCoordinator(navigationController: navigationController)
+        let childCoordinator = MainTabBarCoordinator(navigationController: navigationController)
         childCoordinator.parantCoordinator = self
         childCoordinators?.append(childCoordinator)
         

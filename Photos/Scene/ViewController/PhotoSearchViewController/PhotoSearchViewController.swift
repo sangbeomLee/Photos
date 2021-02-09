@@ -1,18 +1,23 @@
 //
-//  PhotosViewController.swift
+//  PhotoSearchViewController.swift
 //  Photos
 //
-//  Created by 이상범 on 2021/02/08.
+//  Created by 이상범 on 2021/02/09.
 //
 
 import UIKit
 
-class PhotosViewController: UIViewController {
-    weak var coordinator: PhotosCoordinator?
-
-    @IBOutlet weak var tableView: UITableView!
+class PhotoSearchViewController: UIViewController {
+    weak var coordinator: PhotoSearchCoordinator?
     
-    // TODO: - Storage 만들어 관리하기
+    private let searchView: SearchView = SearchView.make()
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return tableView
+    }()
+    
     var photos: [PhotoModel] = [] {
         didSet {
             tableView.reloadData()
@@ -21,29 +26,22 @@ class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
+        setupLayout()
         fetchData()
     }
 }
 
-private extension PhotosViewController {
+private extension PhotoSearchViewController {
     func setupView() {
-        setupNavigation()
+        setupNavigationView()
         setupTableView()
     }
     
-    func setupNavigation() {
-        navigationItem.title = "PHOTOS"
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = false
-        // TODO: - Font 추가
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        
-        navigationController?.hidesBarsOnSwipe = true
-        
-        navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
+    func setupNavigationView() {
+        // TODO: - navigationBar 말고 위에 상태창도 사라져버렸다. 해결하자
+        navigationController?.isNavigationBarHidden = true
     }
     
     func setupTableView() {
@@ -53,6 +51,23 @@ private extension PhotosViewController {
         // TODO: - self sizing 에 문제가 있다. 이를 해결하자.
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    func setupLayout() {
+        view.addSubview(searchView)
+        view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchView.heightAnchor.constraint(equalToConstant: 40),
+            
+            tableView.topAnchor.constraint(equalTo: searchView.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        ])
     }
     
     func fetchData() {
@@ -70,8 +85,7 @@ private extension PhotosViewController {
     }
 }
 
-
-extension PhotosViewController: UITableViewDelegate {
+extension PhotoSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = photos[indexPath.row].thumbImage else { return 0 }
         
@@ -81,7 +95,7 @@ extension PhotosViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension PhotosViewController: UITableViewDataSource {
+extension PhotoSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         coordinator?.createPhotoDetailViewController(photos: photos, currentIndex: indexPath.row)
     }
