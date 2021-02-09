@@ -27,8 +27,31 @@ public class Downloader {
     }
     
     // TODO: - Request 를 통한 download 만들기.
+    // TODO: - 두개를 하나로 합치는 방법을 생각해보기
     func downloadData(from request: URLRequest, completion: @escaping (DownloadedDataResult) -> ()) {
         self.session.dataTask(with: request) { (data, response, error) in
+            guard error == nil else{
+                completion(DownloadedDataResult.failure(DownloaderError.fetchError))
+                return
+            }
+
+            // TODO: - HTTPResponse 관련 추가 개선
+            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                completion(DownloadedDataResult.failure(DownloaderError.responseError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(DownloadedDataResult.failure(DownloaderError.dataError))
+                return
+            }
+            
+            completion(DownloadedDataResult.success(data))
+        }.resume()
+    }
+    
+    func downloadData(from url: URL, completion: @escaping (DownloadedDataResult) -> ()) {
+        self.session.dataTask(with: url) { (data, response, error) in
             guard error == nil else{
                 completion(DownloadedDataResult.failure(DownloaderError.fetchError))
                 return

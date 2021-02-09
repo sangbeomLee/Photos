@@ -49,13 +49,15 @@ private extension PhotosViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "PhotosTableViewCell", bundle: nil), forCellReuseIdentifier: "PhotosTableViewCell")
         // TODO: - self sizing 에 문제가 있다. 이를 해결하자.
-        tableView.estimatedRowHeight = 120
+        tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
     }
     
     func fetchData() {
         PhotoAPIProvider.shared.fetchPhotos {[weak self] result in
             switch result {
+            // TODO: - 여기서 어떻게 해야하나..? 흠... 다른 사람들은 어떤식으로 진행하는지 내일 찾아보자.
+            // TODO: - 해야 할 일 쭈욱 나열하기. -> 내일은 전체적인 완성이 되어야한다.
             case .success(let photos):
                 self?.photos = photos
             case .failure(let error):
@@ -67,7 +69,8 @@ private extension PhotosViewController {
 }
 
 
-extension PhotosViewController: UITableViewDelegate {}
+extension PhotosViewController: UITableViewDelegate {
+}
 
 extension PhotosViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,10 +82,15 @@ extension PhotosViewController: UITableViewDataSource {
             // TODO: 오류처리
             return UITableViewCell()
         }
+
         // TODO: - 데이터 받아오면 configure 해주기
-        
-        cell.titleLabel.text = String(indexPath.row)
-        
+        cell.configure(by: photos[indexPath.row])
+        cell.setImage(from: photos[indexPath.row].regularUrl!) { (image) in
+            cell.photoImageView.image = image
+            cell.photoImageViewHeightConstraint.constant = cell.photoImageView.frame.size.width * image!.cropRatio
+
+        }
+
         return cell
     }
 }

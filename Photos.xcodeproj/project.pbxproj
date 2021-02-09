@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D354256425D235D8006C449E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D354256325D235D8006C449E /* UIImage+Extension.swift */; };
 		D3D092E025D1031000CB56CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092DF25D1031000CB56CA /* AppDelegate.swift */; };
 		D3D092E925D1031200CB56CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3D092E825D1031200CB56CA /* Assets.xcassets */; };
 		D3D092EC25D1031200CB56CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D092EA25D1031200CB56CA /* LaunchScreen.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D354256325D235D8006C449E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		D3D092DC25D1031000CB56CA /* Photos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D092DF25D1031000CB56CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3D092E825D1031200CB56CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 		D3D092DE25D1031000CB56CA /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				D3D0934525D1954100CB56CA /* Storage */,
 				D3D0933925D134E500CB56CA /* Model */,
 				D3D0933025D12A6B00CB56CA /* Networking */,
 				D3D0932125D11A5B00CB56CA /* Extension */,
@@ -140,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				D3D0932225D11A7400CB56CA /* UIViewController+Extension.swift */,
+				D354256325D235D8006C449E /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -178,6 +182,13 @@
 				D3D0933D25D15AAC00CB56CA /* PhotosModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D3D0934525D1954100CB56CA /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +273,7 @@
 				D3D0932325D11A7400CB56CA /* UIViewController+Extension.swift in Sources */,
 				D3D0931725D1175B00CB56CA /* CoordinatorType.swift in Sources */,
 				D3D0934125D1637700CB56CA /* APIKey.swift in Sources */,
+				D354256425D235D8006C449E /* UIImage+Extension.swift in Sources */,
 				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
 				D3D0933625D12BC500CB56CA /* PhotoAPIProvider.swift in Sources */,
 			);

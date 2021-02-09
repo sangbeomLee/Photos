@@ -5,10 +5,11 @@
 //  Created by 이상범 on 2021/02/08.
 //
 
-import Foundation
+import UIKit
 
 enum APIError: Error {
     case parseJsonError
+    case downloadImageError
 }
 
 // TODO: - page=?_
@@ -40,12 +41,29 @@ class PhotoAPIProvider {
         let request = URLRequest(url: PhotoAPI.page.url)
         
         fetch(request) { (result: FetchResult<[PhotosResponse]>) in
+            switch result {
+            case .success(let photosResponse):
+                // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
+                let photosModels = photosResponse.map { PhotosModel(response: $0) }
+                DispatchQueue.main.async {
+                    completion(FetchResult.success(photosModels))
+                }
+            case .failure(let error):
+                completion(FetchResult.failure(error))
+            }
+        }
+    }
+    
+    func downloadImage(from url: URL, completion: @escaping (FetchResult<UIImage>) -> Void) {
+        downloader.downloadData(from: url) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let photosResponse):
-                    // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
-                    let photosModels = photosResponse.map { PhotosModel(response: $0) }
-                    completion(FetchResult.success(photosModels))
+                case .success(let data):
+                    if let image = UIImage(data: data) {
+                        completion(FetchResult.success(image))
+                    } else {
+                        completion(FetchResult.failure(APIError.downloadImageError))
+                    }
                 case .failure(let error):
                     completion(FetchResult.failure(error))
                 }
