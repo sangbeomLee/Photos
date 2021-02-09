@@ -13,7 +13,7 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // TODO: - Storage 만들어 관리하기
-    var photos: [PhotosModel] = [] {
+    var photos: [PhotoModel] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -70,6 +70,11 @@ private extension PhotosViewController {
 
 
 extension PhotosViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let image = photos[indexPath.row].thumbImage else { return 0 }
+        
+        return tableView.frame.size.width * image.cropRatio
+    }
 }
 
 extension PhotosViewController: UITableViewDataSource {
@@ -85,11 +90,6 @@ extension PhotosViewController: UITableViewDataSource {
 
         // TODO: - 데이터 받아오면 configure 해주기
         cell.configure(by: photos[indexPath.row])
-        cell.setImage(from: photos[indexPath.row].regularUrl!) { (image) in
-            cell.photoImageView.image = image
-            cell.photoImageViewHeightConstraint.constant = cell.photoImageView.frame.size.width * image!.cropRatio
-
-        }
 
         return cell
     }
