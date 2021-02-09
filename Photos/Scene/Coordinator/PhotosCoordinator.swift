@@ -28,4 +28,11 @@ class PhotosCoordinator: CoordinatorType {
         
         navigationController?.pushViewController(photosViewController, animated: true)
     }
+    
+    func createPhotoDetailViewController(photos: [PhotoModel], currentIndex: Int) {
+        let childCoordinator = PhotoDetailCoordinator(navigationController: navigationController, photos: photos, currentIndex: currentIndex)
+        
+        childCoordinator.start()
+        childCoordinators?.append(childCoordinator)
+    }
 }
