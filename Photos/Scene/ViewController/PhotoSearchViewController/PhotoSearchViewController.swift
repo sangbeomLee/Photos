@@ -35,12 +35,17 @@ class PhotoSearchViewController: UIViewController {
 private extension PhotoSearchViewController {
     func setupView() {
         setupNavigationView()
+        setupSearchView()
         setupTableView()
     }
     
     func setupNavigationView() {
         // TODO: - navigationBar 말고 위에 상태창도 사라져버렸다. 해결하자
         navigationController?.isNavigationBarHidden = true
+    }
+    
+    func setupSearchView() {
+        searchView.delegate = self
     }
     
     func setupTableView() {
@@ -116,4 +121,25 @@ extension PhotoSearchViewController: UITableViewDataSource {
 
         return cell
     }
+}
+
+extension PhotoSearchViewController: SearchViewDelegate {
+    func searchButtonDidTapped(text: String?) {
+        guard let query = text else { return }
+        
+        PhotoAPIProvider.shared.fetchSearchPhotos(for: query) { result in
+            switch result {
+            case .success(let photos):
+                if photos.isEmpty {
+                    // TODO: - search 결과가 없습니다. 띄우기
+                } else {
+                    self.photos = photos
+                }
+            case .failure(let error):
+                // TODO: - Error
+                print(error)
+            }
+        }
+    }
+
 }

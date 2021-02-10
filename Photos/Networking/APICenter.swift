@@ -22,6 +22,9 @@ private enum API {
 }
 
 struct APICenter {
+    private static let apiKey = APIKey.key
+    private static let host = "api.unsplash.com"
+    
     // TODO: - 좀 더 간결하게 할 수 있을 것 같다. -> enum QueryItems 만들어서 간결하게 가능할듯
     static func getPhotosRequest(page: Int = 1, per_page: Int = 10) -> URLRequest? {
         let queryItems: [URLQueryItem] = [
@@ -50,9 +53,6 @@ struct APICenter {
 }
 
 private extension APICenter {
-    static let apiKey = APIKey.key
-    static let host = "api.unsplash.com"
-    
     static var baseUrlComponents: URLComponents {
         var components = URLComponents()
         components.scheme = "https"

@@ -7,7 +7,37 @@
 
 import UIKit
 
+protocol SearchViewDelegate: AnyObject {
+    func searchButtonDidTapped(text: String?)
+}
+
 class SearchView: UIView {
+    weak var delegate: SearchViewDelegate?
+    
+    var text: String? {
+        textField.text
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .black
+        
+        setupLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func make() -> SearchView {
+        let searchView = SearchView()
+        searchView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return searchView
+    }
+    
+    // MARK: - components
+    
     private var container: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -60,27 +90,10 @@ class SearchView: UIView {
         button.backgroundColor = .blue
         button.clipsToBounds = true
         button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
         
         return button
     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .black
-        
-        setupLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    static func make() -> SearchView {
-        let searchView = SearchView()
-        searchView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return searchView
-    }
 }
 
 private extension SearchView {
@@ -106,6 +119,13 @@ private extension SearchView {
             searchImageView.widthAnchor.constraint(equalTo: searchImageView.heightAnchor),
             searchButton.widthAnchor.constraint(equalToConstant: 60)
         ])
+    }
+}
+
+private extension SearchView {
+    @objc
+    func buttonDidTapped(button: UIButton) {
+        delegate?.searchButtonDidTapped(text: text)
     }
 }
 
