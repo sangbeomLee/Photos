@@ -12,13 +12,19 @@ class PhotoDetailViewController: UIViewController {
     
     private var photos: [PhotoModel] = []
     private var currentIndex: Int = 0
-
-    private var photoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+    
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         
-        return imageView
+        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView.isPagingEnabled = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.invalidateIntrinsicContentSize()
+        
+        view.addSubview(collectionView)
+        
+        return collectionView
     }()
     
     override func viewDidLoad() {
@@ -30,8 +36,6 @@ class PhotoDetailViewController: UIViewController {
     func setPhotos(_ photos: [PhotoModel], now currentIndex: Int) {
         self.photos = photos
         self.currentIndex = currentIndex
-        
-        photoImageView.image = photos[currentIndex].thumbImage
     }
 }
 
@@ -39,20 +43,56 @@ private extension PhotoDetailViewController {
     func setupView() {
         setupNavigationController()
         setupLayout()
+        setupCollectionView()
     }
     
     func setupNavigationController() {
-
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.hidesBarsOnSwipe = false
     }
     
     func setupLayout() {
-        view.addSubview(photoImageView)
-        
         NSLayoutConstraint.activate([
-            photoImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            photoImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            photoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            photoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
+    }
+    
+    func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(PhotoDetailCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoDetailCollectionViewCell")
+    }
+}
+
+extension PhotoDetailViewController: UICollectionViewDelegate {
+
+}
+
+extension PhotoDetailViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCollectionViewCell", for: indexPath) as? PhotoDetailCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with: photos[indexPath.row])
+        
+        return cell
+    }
+}
+
+extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+        return CGSize(width: view.frame.width, height: view.frame.height - (view.safeAreaInsets.top + view.safeAreaInsets.bottom))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }

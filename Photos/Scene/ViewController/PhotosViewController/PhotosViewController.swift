@@ -13,6 +13,7 @@ class PhotosViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // TODO: - Storage 만들어 관리하기
+    private var photoStorage = PhotoStorage()
     var photos: [PhotoModel] = [] {
         didSet {
             tableView.reloadData()
@@ -56,12 +57,18 @@ private extension PhotosViewController {
     }
     
     func fetchData() {
-        PhotoAPIProvider.shared.fetchPhotos {[weak self] result in
+        let page = photoStorage.currentPage
+        photoStorage.lastIndex += 10
+        
+        PhotoAPIProvider.shared.fetchPhotos(page) {[weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             // TODO: - 여기서 어떻게 해야하나..? 흠... 다른 사람들은 어떤식으로 진행하는지 내일 찾아보자.
             // TODO: - 해야 할 일 쭈욱 나열하기. -> 내일은 전체적인 완성이 되어야한다.
             case .success(let photos):
-                self?.photos = photos
+                self.photoStorage.store(photos)
+                self.photos = self.photoStorage.photoList()
             case .failure(let error):
                 // TODO: - Error 처리
                 print(error)
@@ -83,6 +90,7 @@ extension PhotosViewController: UITableViewDelegate {
 
 extension PhotosViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         coordinator?.createPhotoDetailViewController(photos: photos, currentIndex: indexPath.row)
     }
     
@@ -95,9 +103,13 @@ extension PhotosViewController: UITableViewDataSource {
             // TODO: 오류처리
             return UITableViewCell()
         }
+        let index = indexPath.row
+        if photoStorage.sholudDownloadNextPage(index: index) {
+            fetchData()
+        }
 
         // TODO: - 데이터 받아오면 configure 해주기
-        cell.configure(by: photos[indexPath.row])
+        cell.configure(by: photos[index])
 
         return cell
     }

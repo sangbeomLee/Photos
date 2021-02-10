@@ -25,8 +25,8 @@ class PhotoAPIProvider {
     }
     
     // TODO: - 비슷한 부분 공통화 할 수 있을까?
-    func fetchPhotos(completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
-        guard let request = APICenter.getPhotosRequest() else {
+    func fetchPhotos(_ page: Int, completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
+        guard let request = APICenter.getPhotosRequest(page: page) else {
             completion(FetchResult.failure(APIError.requestError))
             return
         }

@@ -26,7 +26,7 @@ struct APICenter {
     private static let host = "api.unsplash.com"
     
     // TODO: - 좀 더 간결하게 할 수 있을 것 같다. -> enum QueryItems 만들어서 간결하게 가능할듯
-    static func getPhotosRequest(page: Int = 1, per_page: Int = 10) -> URLRequest? {
+    static func getPhotosRequest(page: Int, per_page: Int = 10) -> URLRequest? {
         let queryItems: [URLQueryItem] = [
             URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "per_page", value: String(per_page)),

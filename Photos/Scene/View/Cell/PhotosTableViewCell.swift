@@ -14,7 +14,6 @@ class PhotosTableViewCell: UITableViewCell {
     // TODO: - 정리하기 -> 어떻게 self resizing 을 할까 하다가 이런 식으로 적용했다.
     @IBOutlet weak var photoImageViewHeightConstraint: NSLayoutConstraint!
  
-    var isUpdated: Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -23,7 +22,6 @@ class PhotosTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         photoImageView.image = .none
-        isUpdated = false
     }
     
     func configure(by photo: PhotoModel) {
