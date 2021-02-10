@@ -8,7 +8,7 @@
 import UIKit
 
 final class PhotoDetailViewController: UIViewController {
-    private var storage: PhotoStorage?
+    private var storage: Storage?
     private var currentIndex: Int = 0
     
     private lazy var collectionView: UICollectionView = {
@@ -31,7 +31,7 @@ final class PhotoDetailViewController: UIViewController {
         setupView()
     }
     
-    func setPhotos(_ storage: PhotoStorage, now currentIndex: Int) {
+    func setPhotos(_ storage: Storage, now currentIndex: Int) {
         self.storage = storage
         storage.delegate = self
         self.currentIndex = currentIndex
@@ -107,6 +107,7 @@ extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotoDetailViewController: StorageDelegate {
     func didFinishFetchPhotos() {
+        print(storage?.count)
         collectionView.reloadData()
     }
 }

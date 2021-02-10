@@ -24,7 +24,7 @@ class PhotoSearchCoordinator: CoordinatorType {
         navigationController?.pushViewController(photoSearchViewController, animated: true)
     }
     
-    func createPhotoDetailViewController(storage: PhotoStorage, currentIndex: Int) {
+    func createPhotoDetailViewController(storage: SearchPhotoStorage, currentIndex: Int) {
         let photoDetailViewController = PhotoDetailViewController()
         photoDetailViewController.setPhotos(storage, now: currentIndex)
         

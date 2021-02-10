@@ -11,6 +11,7 @@ class PhotoSearchViewController: UIViewController {
     weak var coordinator: PhotoSearchCoordinator?
     
     private let searchView: SearchView = SearchView.make()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -18,17 +19,13 @@ class PhotoSearchViewController: UIViewController {
         return tableView
     }()
     
-    private var storage = PhotoStorage()
-    var photos: [PhotoModel] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
+    private var storage = SearchPhotoStorage()
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
+        setupStorage()
         setupLayout()
     }
 }
@@ -75,29 +72,14 @@ private extension PhotoSearchViewController {
         ])
     }
     
-    func fetchData(with query: String?) {
-//        guard let query = query else { return }
-//        let page = storage.nextPage
-//        storage.lastIndex += 10
-//        
-//        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: page) {[weak self] result in
-//            guard let self = self else { return }
-//            
-//            switch result {
-//            case .success(let photos):
-//                self.storage.store(photos)
-//                self.photos = self.storage.photoList()
-//            case .failure(let error):
-//                // TODO: - Error 처리
-//                print(error)
-//            }
-//        }
+    func setupStorage() {
+        storage.delegate = self
     }
 }
 
 extension PhotoSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = photos[indexPath.row].thumbImage else { return 0 }
+        guard let photo = storage.photoFromList(at: indexPath.row), let image = photo.thumbImage else { return 0 }
         
         return tableView.frame.size.width * image.cropRatio
     }
@@ -111,21 +93,18 @@ extension PhotoSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        return storage.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosTableViewCell", for: indexPath) as? PhotosTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosTableViewCell", for: indexPath) as? PhotosTableViewCell,
+              let photo = storage.photoFromList(at: indexPath.row) else {
             // TODO: 오류처리
             return UITableViewCell()
         }
-        let index = indexPath.row
-        if storage.sholudDownloadNextPage(index: index) {
-            fetchData(with: searchView.text)
-        }
         
         // TODO: - 데이터 받아오면 configure 해주기
-        cell.configure(by: photos[indexPath.row])
+        cell.configure(by: photo)
 
         return cell
     }
@@ -135,19 +114,12 @@ extension PhotoSearchViewController: SearchViewDelegate {
     func searchButtonDidTapped(text: String?) {
         guard let query = text else { return }
         
-        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: 1) { result in
-            switch result {
-            case .success(let photos):
-                if photos.isEmpty {
-                    // TODO: - search 결과가 없습니다. 띄우기
-                } else {
-                    self.photos = photos
-                }
-            case .failure(let error):
-                // TODO: - Error
-                print(error)
-            }
-        }
+        storage.fetchSearchPhotos(with: query)
     }
+}
 
+extension PhotoSearchViewController: StorageDelegate {
+    func didFinishFetchPhotos() {
+        tableView.reloadData()
+    }
 }

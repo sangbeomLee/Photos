@@ -25,10 +25,7 @@ class Storage {
     var count: Int {
         photos.count
     }
-    
-    // TODO: - 1시간이 지났다면 다시 데이터를 받는다.
-    //private var currentDate = Date()
-    
+  
     func sholudDownloadNextPage(index: Int) -> Bool {
         return lastIndex - 5 <= index
     }

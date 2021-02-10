@@ -20,6 +20,7 @@ class SearchPhotoStorage: Storage {
     
     func fetchSearchPhotos(with query: String?) {
         guard let query = query else { return }
+        self.query = query
         
         let page = nextPage
         // TODO: - storage.lastIndex 이부분 변경
@@ -30,7 +31,7 @@ class SearchPhotoStorage: Storage {
             
             switch result {
             case .success(let photos):
-                self.photos.append(contentsOf: photos)
+                self.store(photos)
             case .failure(let error):
                 // TODO: - Error 처리
                 print(error)
