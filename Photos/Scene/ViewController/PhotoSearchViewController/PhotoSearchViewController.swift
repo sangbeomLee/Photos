@@ -18,6 +18,7 @@ class PhotoSearchViewController: UIViewController {
         return tableView
     }()
     
+    private var storage = PhotoStorage()
     var photos: [PhotoModel] = [] {
         didSet {
             tableView.reloadData()
@@ -75,19 +76,22 @@ private extension PhotoSearchViewController {
     }
     
     func fetchData(with query: String?) {
-        guard let query = query else { return }
-        
-        PhotoAPIProvider.shared.fetchSearchPhotos(for: query) {[weak self] result in
-            switch result {
-            // TODO: - 여기서 어떻게 해야하나..? 흠... 다른 사람들은 어떤식으로 진행하는지 내일 찾아보자.
-            // TODO: - 해야 할 일 쭈욱 나열하기. -> 내일은 전체적인 완성이 되어야한다.
-            case .success(let photos):
-                self?.photos = photos
-            case .failure(let error):
-                // TODO: - Error 처리
-                print(error)
-            }
-        }
+//        guard let query = query else { return }
+//        let page = storage.nextPage
+//        storage.lastIndex += 10
+//        
+//        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: page) {[weak self] result in
+//            guard let self = self else { return }
+//            
+//            switch result {
+//            case .success(let photos):
+//                self.storage.store(photos)
+//                self.photos = self.storage.photoList()
+//            case .failure(let error):
+//                // TODO: - Error 처리
+//                print(error)
+//            }
+//        }
     }
 }
 
@@ -103,7 +107,7 @@ extension PhotoSearchViewController: UITableViewDelegate {
 
 extension PhotoSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.createPhotoDetailViewController(photos: photos, currentIndex: indexPath.row)
+        coordinator?.createPhotoDetailViewController(storage: storage, currentIndex: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,7 +119,11 @@ extension PhotoSearchViewController: UITableViewDataSource {
             // TODO: 오류처리
             return UITableViewCell()
         }
-
+        let index = indexPath.row
+        if storage.sholudDownloadNextPage(index: index) {
+            fetchData(with: searchView.text)
+        }
+        
         // TODO: - 데이터 받아오면 configure 해주기
         cell.configure(by: photos[indexPath.row])
 
@@ -127,7 +135,7 @@ extension PhotoSearchViewController: SearchViewDelegate {
     func searchButtonDidTapped(text: String?) {
         guard let query = text else { return }
         
-        PhotoAPIProvider.shared.fetchSearchPhotos(for: query) { result in
+        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: 1) { result in
             switch result {
             case .success(let photos):
                 if photos.isEmpty {

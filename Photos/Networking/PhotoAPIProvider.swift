@@ -47,8 +47,8 @@ class PhotoAPIProvider {
         }
     }
     
-    func fetchSearchPhotos(for text: String, completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
-        guard let request = APICenter.getSearchPhotosRequest(for: text) else {
+    func fetchSearchPhotos(for text: String, page: Int, completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
+        guard let request = APICenter.getSearchPhotosRequest(for: text, page: page) else {
             completion(FetchResult.failure(APIError.requestError))
             return
         }

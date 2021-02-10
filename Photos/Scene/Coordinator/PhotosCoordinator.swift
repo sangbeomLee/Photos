@@ -17,10 +17,6 @@ class PhotosCoordinator: CoordinatorType {
         childCoordinators = [CoordinatorType]()
     }
     
-    deinit {
-        print("gone")
-    }
-    
     func start() {
         guard let photosViewController = PhotosViewController.instantiatingFromNib() else {
             // TODO: Error 처리
@@ -35,10 +31,11 @@ class PhotosCoordinator: CoordinatorType {
     
     // TODO: - ChildCoordinator 삭제요망
     
-    func createPhotoDetailViewController(photos: [PhotoModel], currentIndex: Int) {
-        let childCoordinator = PhotoDetailCoordinator(navigationController: navigationController, photos: photos, currentIndex: currentIndex)
+    func createPhotoDetailViewController(storage: PhotoStorage, currentIndex: Int) {
+        let photoDetailViewController = PhotoDetailViewController()
+        photoDetailViewController.setPhotos(storage, now: currentIndex)
         
-        childCoordinator.start()
-        childCoordinators?.append(childCoordinator)
+        // TODO: - modal 방식의 변화
+        navigationController?.pushViewController(photoDetailViewController, animated: true)
     }
 }

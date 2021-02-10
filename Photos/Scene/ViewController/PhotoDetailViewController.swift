@@ -7,10 +7,8 @@
 
 import UIKit
 
-class PhotoDetailViewController: UIViewController {
-    weak var coordinator: PhotoDetailCoordinator?
-    
-    private var photos: [PhotoModel] = []
+final class PhotoDetailViewController: UIViewController {
+    private var storage: PhotoStorage?
     private var currentIndex: Int = 0
     
     private lazy var collectionView: UICollectionView = {
@@ -33,9 +31,10 @@ class PhotoDetailViewController: UIViewController {
         setupView()
     }
     
-    func setPhotos(_ photos: [PhotoModel], now currentIndex: Int) {
-        self.photos = photos
+    func setPhotos(_ storage: PhotoStorage, now currentIndex: Int) {
+        self.storage = storage
         self.currentIndex = currentIndex
+        collectionView.scrollToItem(at: IndexPath(index: currentIndex), at: .top, animated: true)
     }
 }
 
@@ -67,20 +66,23 @@ private extension PhotoDetailViewController {
     }
 }
 
-extension PhotoDetailViewController: UICollectionViewDelegate {
-
-}
+extension PhotoDetailViewController: UICollectionViewDelegate {}
 
 extension PhotoDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        guard let storage = storage else { return 0 }
+        
+        return storage.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCollectionViewCell", for: indexPath) as? PhotoDetailCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCollectionViewCell", for: indexPath) as? PhotoDetailCollectionViewCell,
+              let storage = storage,
+              let photo = storage.photoFromList(at: indexPath.row) else {
             return UICollectionViewCell()
         }
-        cell.configure(with: photos[indexPath.row])
+        
+        cell.configure(with: photo)
         
         return cell
     }
