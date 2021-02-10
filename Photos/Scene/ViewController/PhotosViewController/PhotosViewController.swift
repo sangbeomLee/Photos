@@ -86,7 +86,7 @@ extension PhotosViewController: UITableViewDataSource {
     }
 }
 
-extension PhotosViewController: PhotoStorageDelegate {
+extension PhotosViewController: StorageDelegate {
     func didFinishFetchPhotos() {
         tableView.reloadData()
     }

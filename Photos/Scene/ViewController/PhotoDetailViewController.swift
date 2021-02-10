@@ -33,8 +33,13 @@ final class PhotoDetailViewController: UIViewController {
     
     func setPhotos(_ storage: PhotoStorage, now currentIndex: Int) {
         self.storage = storage
+        storage.delegate = self
         self.currentIndex = currentIndex
-        collectionView.scrollToItem(at: IndexPath(index: currentIndex), at: .top, animated: true)
+        
+        // collectionView 의 Cell 이 불리기 전에 옮겨준다.
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .centeredHorizontally, animated: false)
+        }
     }
 }
 
@@ -82,6 +87,7 @@ extension PhotoDetailViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
+        currentIndex = indexPath.row
         cell.configure(with: photo)
         
         return cell
@@ -96,5 +102,11 @@ extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+extension PhotoDetailViewController: StorageDelegate {
+    func didFinishFetchPhotos() {
+        collectionView.reloadData()
     }
 }

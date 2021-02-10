@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol PhotoStorageDelegate: AnyObject {
+protocol StorageDelegate: AnyObject {
     func didFinishFetchPhotos()
 }
 
 class Storage {
-    weak var delegate: PhotoStorageDelegate?
+    weak var delegate: StorageDelegate?
     
     var photos: [PhotoModel] = []
     var currentPage: Int = 0
