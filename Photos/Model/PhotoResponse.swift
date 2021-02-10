@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct SearchPhotoResponse: Codable {
+    let results: [PhotoResponse]
+}
+
 // TODO: - updated_at 을 활용 해 보자.
 struct PhotoResponse: Codable {
     let id: String

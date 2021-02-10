@@ -32,18 +32,6 @@ class PhotosTableViewCell: UITableViewCell {
         photoImageView.image = photo.thumbImage
         subtitleLabel.isHidden = photo.isSponsor ? false : true
     }
-    
-    func setImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        if isUpdated { return }
-        PhotoAPIProvider.shared.downloadImage(from: url) { (result) in
-            switch result {
-            case .success(let image):
-                completion(image)
-            case .failure(_):
-                completion(nil)
-            }
-        }
-    }
 }
 
 private extension PhotosTableViewCell {

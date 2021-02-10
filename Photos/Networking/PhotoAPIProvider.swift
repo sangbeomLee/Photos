@@ -10,15 +10,7 @@ import UIKit
 enum APIError: Error {
     case parseJsonError
     case downloadImageError
-}
-
-// TODO: - page=?_
-enum PhotoAPI {
-    case page
-    
-    static let baseUrl = "https://api.unsplash.com/"
-    var path: String { "photos" }
-    var url: URL { URL(string: PhotoAPI.baseUrl + path + "/?page=1&per_page=20&client_id=\(APIKey.key)")! }
+    case requestError
 }
 
 class PhotoAPIProvider {
@@ -33,13 +25,11 @@ class PhotoAPIProvider {
     }
     
     func fetchPhotos(completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
-        // TODO: - 보완할 것 request 만드는 것 따로 정의하자
-//        var request = URLRequest(url: PhotoAPI.page.url)
-//        let tokenId = APIKey.key
-//        let authorizationKey = "client_id".appending(tokenId)
-//        request.addValue(authorizationKey, forHTTPHeaderField: "Authorization")
-        let request = URLRequest(url: PhotoAPI.page.url)
-        
+        guard let request = APICenter.getPhotosRequest() else {
+            completion(FetchResult.failure(APIError.requestError))
+            return
+        }
+
         fetch(request) {[weak self] (result: FetchResult<[PhotoResponse]>) in
             switch result {
             case .success(let photosResponse):
@@ -52,6 +42,46 @@ class PhotoAPIProvider {
                 }
             case .failure(let error):
                 completion(FetchResult.failure(error))
+            }
+        }
+    }
+    
+    func fetchSearchPhotos(for text: String, completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
+        guard let request = APICenter.getSearchPhotosRequest(for: text) else {
+            completion(FetchResult.failure(APIError.requestError))
+            return
+        }
+
+        fetch(request) {[weak self] (result: FetchResult<SearchPhotoResponse>) in
+            switch result {
+            case .success(let searchPhotoResponse):
+                // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
+                let photoModels = searchPhotoResponse.results.map { PhotoModel(response: $0) }
+                self?.downloadImages(for: photoModels) { photoModels in
+                    DispatchQueue.main.async {
+                        completion(FetchResult.success(photoModels))
+                    }
+                }
+            case .failure(let error):
+                completion(FetchResult.failure(error))
+            }
+        }
+    }
+}
+
+private extension PhotoAPIProvider {
+    func fetch<T: Codable>(_ request: URLRequest, completion: @escaping (FetchResult<T>) -> Void) {
+        downloader.downloadData(from: request) {[weak self] downloadedDataResult in
+            switch downloadedDataResult {
+            case .success(let data):
+                if let decodedData: T = self?.parseJson(for: data) {
+                    completion(FetchResult.success(decodedData))
+                } else {
+                    completion(FetchResult.failure(APIError.parseJsonError))
+                }
+            case .failure(let error):
+                // TODO: - error 처리
+                print(error)
             }
         }
     }
@@ -97,24 +127,6 @@ class PhotoAPIProvider {
                 case .failure(let error):
                     completion(FetchResult.failure(error))
                 }
-            }
-        }
-    }
-}
-
-private extension PhotoAPIProvider {
-    func fetch<T: Codable>(_ request: URLRequest, completion: @escaping (FetchResult<T>) -> Void) {
-        downloader.downloadData(from: request) {[weak self] downloadedDataResult in
-            switch downloadedDataResult {
-            case .success(let data):
-                if let decodedData: T = self?.parseJson(for: data) {
-                    completion(FetchResult.success(decodedData))
-                } else {
-                    completion(FetchResult.failure(APIError.parseJsonError))
-                }
-            case .failure(let error):
-                // TODO: - error 처리
-                print(error)
             }
         }
     }

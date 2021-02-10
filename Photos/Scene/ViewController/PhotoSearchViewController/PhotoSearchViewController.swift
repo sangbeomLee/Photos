@@ -29,7 +29,6 @@ class PhotoSearchViewController: UIViewController {
 
         setupView()
         setupLayout()
-        fetchData()
     }
 }
 
@@ -70,8 +69,10 @@ private extension PhotoSearchViewController {
         ])
     }
     
-    func fetchData() {
-        PhotoAPIProvider.shared.fetchPhotos {[weak self] result in
+    func fetchData(with query: String?) {
+        guard let query = query else { return }
+        
+        PhotoAPIProvider.shared.fetchSearchPhotos(for: query) {[weak self] result in
             switch result {
             // TODO: - 여기서 어떻게 해야하나..? 흠... 다른 사람들은 어떤식으로 진행하는지 내일 찾아보자.
             // TODO: - 해야 할 일 쭈욱 나열하기. -> 내일은 전체적인 완성이 되어야한다.
