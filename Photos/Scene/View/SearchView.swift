@@ -66,7 +66,7 @@ class SearchView: UIView {
 
     // TODO: - convension 찾아보자.
     private var searchImageView: UIImageView = {
-       let imageView = UIImageView(image: UIImage(named: "search"))
+       let imageView = UIImageView(image: UIImage(named: "searchIcon"))
         imageView.contentMode = .scaleAspectFit
         
         return imageView

@@ -8,6 +8,7 @@
 import UIKit
 
 final class PhotoDetailViewController: UIViewController {
+    weak var coordinator: CoordinatorType?
     private var storage: Storage?
     private var currentIndex: Int = 0
     
@@ -19,16 +20,31 @@ final class PhotoDetailViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.invalidateIntrinsicContentSize()
-        
-        view.addSubview(collectionView)
-        
+ 
         return collectionView
     }()
+    
+    private var cancleButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "cancleIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .white
+        button.imageView?.contentMode = .scaleAspectFill
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        
+        button.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private var cancleButtonBottomConstraint = NSLayoutConstraint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
+        setupLayout()
     }
     
     func setPhotos(_ storage: Storage, now currentIndex: Int) {
@@ -45,22 +61,38 @@ final class PhotoDetailViewController: UIViewController {
 
 private extension PhotoDetailViewController {
     func setupView() {
+        setupViewController()
         setupNavigationController()
-        setupLayout()
         setupCollectionView()
+    }
+    
+    func setupViewController() {
+        view.backgroundColor = .black
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTapped))
+        view.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func setupNavigationController() {
         navigationController?.isNavigationBarHidden = true
-        navigationController?.hidesBarsOnSwipe = false
+        tabBarController?.tabBar.isHidden = true
     }
     
     func setupLayout() {
+        view.addSubview(collectionView)
+        view.addSubview(cancleButton)
+        cancleButtonBottomConstraint = cancleButton.bottomAnchor.constraint(equalTo: view.topAnchor)
+        print(cancleButtonBottomConstraint.constant)
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
+            cancleButtonBottomConstraint,
+            cancleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            cancleButton.widthAnchor.constraint(equalToConstant: 20),
+            cancleButton.heightAnchor.constraint(equalToConstant: 20),
         ])
     }
     
@@ -69,6 +101,30 @@ private extension PhotoDetailViewController {
         collectionView.dataSource = self
         collectionView.register(PhotoDetailCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoDetailCollectionViewCell")
     }
+}
+
+@objc
+private extension PhotoDetailViewController {
+    func buttonDidTapped(_ button: UIButton) {
+        guard let storage = storage else { return }
+        
+        if let coordinator = coordinator as? PhotosCoordinator {
+            coordinator.removePhotoDetailViewController(storage: storage, currentIndex: currentIndex)
+        }
+    }
+    
+    func viewDidTapped() {
+        if cancleButtonBottomConstraint.constant == 0 {
+            cancleButtonBottomConstraint.constant = view.safeAreaInsets.top + 40
+        } else {
+            cancleButtonBottomConstraint.constant = 0
+        }
+        
+        UIView.animate(withDuration: 0.4) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
 }
 
 extension PhotoDetailViewController: UICollectionViewDelegate {}
@@ -107,7 +163,6 @@ extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotoDetailViewController: StorageDelegate {
     func didFinishFetchPhotos() {
-        print(storage?.count)
         collectionView.reloadData()
     }
 }

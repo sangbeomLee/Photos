@@ -8,15 +8,21 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
-    weak var coordinator: PhotosCoordinator?
+    weak var coordinator: PhotosCoordinator? {
+        didSet {
+            coordinator?.delegate = self
+        }
+    }
 
     @IBOutlet weak var tableView: UITableView!
-    // TODO: - Storage 만들어 관리하기
+    
     private var storage = PhotoStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .red
+        tableView.backgroundColor = .black
         setupView()
         setupStorage()
     }
@@ -30,7 +36,7 @@ private extension PhotosViewController {
     
     func setupNavigation() {
         navigationItem.title = "PHOTOS"
-        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = false
         // TODO: - Font 추가
@@ -89,5 +95,16 @@ extension PhotosViewController: UITableViewDataSource {
 extension PhotosViewController: StorageDelegate {
     func didFinishFetchPhotos() {
         tableView.reloadData()
+    }
+}
+
+extension PhotosViewController: PhotosCoordinatorDelegate {
+    func detailViewControllerDidDisappear(storage: Storage, index: Int) {
+        guard let storage = storage as? PhotoStorage else { return }
+        
+        self.storage = storage
+        
+        tableView.reloadData()
+        tableView.scrollToRow(at: IndexPath(item: index, section: 0), at: .bottom, animated: false)
     }
 }
