@@ -69,7 +69,7 @@ private extension PhotoSearchViewController {
             searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            searchView.heightAnchor.constraint(equalToConstant: 40),
+            searchView.heightAnchor.constraint(equalToConstant: 48),
             
             tableView.topAnchor.constraint(equalTo: searchView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -123,6 +123,15 @@ extension PhotoSearchViewController: UITableViewDataSource {
 
 // TODO: - Delegate 가 너무 많다..! 이 친구는 block property 로 변경하자.
 extension PhotoSearchViewController: SearchViewDelegate {
+    func textFieldDidChange(text: String?) {
+        guard let text = text else { return }
+        
+        if text.isEmpty {
+            recentView.show(true)
+            tableView.isHidden = true
+        }
+    }
+    
     func searchButtonDidTapped(text: String?) {
         guard let query = text else { return }
         
@@ -133,6 +142,8 @@ extension PhotoSearchViewController: SearchViewDelegate {
 extension PhotoSearchViewController: StorageDelegate {
     func didFinishFetchPhotos() {
         tableView.reloadData()
+        recentView.show(false)
+        tableView.isHidden = false
     }
 }
 

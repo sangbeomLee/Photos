@@ -29,6 +29,8 @@ class SearchRecentHeaderView: UIView {
         return button
     }()
     
+    var buttonAction: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -62,6 +64,6 @@ private extension SearchRecentHeaderView {
 @objc
 private extension SearchRecentHeaderView {
     func buttonDidTapped(_ button: UIButton) {
-        print("tapped")
+        buttonAction?()
     }
 }

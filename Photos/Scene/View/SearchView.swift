@@ -9,6 +9,7 @@ import UIKit
 
 protocol SearchViewDelegate: AnyObject {
     func searchButtonDidTapped(text: String?)
+    func textFieldDidChange(text: String?)
 }
 
 class SearchView: UIView {
@@ -51,6 +52,7 @@ class SearchView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 10
         
         return stackView
     }()
@@ -66,20 +68,21 @@ class SearchView: UIView {
 
     // TODO: - convension 찾아보자.
     private var searchImageView: UIImageView = {
-       let imageView = UIImageView(image: UIImage(named: "searchIcon"))
-        imageView.contentMode = .scaleAspectFit
         
+        let imageView = UIImageView(image: UIImage(named: "searchIcon")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = .white
+        imageView.contentMode = .scaleAspectFit
+                
         return imageView
     }()
-    // TODO: - place holder
-    // TODO: - 가운데 정렬하기
-    // TODO: - TextFiled 로 변경 해야할지..?
+
     private var textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
         textField.font = .systemFont(ofSize: 20)
         textField.textColor = .white
         textField.placeholder = "Search"
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
     }()
@@ -106,8 +109,8 @@ private extension SearchView {
         searchContainer.addArrangedSubview(textField)
         
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: topAnchor, constant: 3),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3),
+            container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             
@@ -122,13 +125,22 @@ private extension SearchView {
     }
 }
 
+// MARK: - objc Func
+
+@objc
 private extension SearchView {
-    @objc
     func buttonDidTapped(button: UIButton) {
+        // text 가 nil 이거나 empty 라면 return
+        guard let text = text, !text.isEmpty else { return }
+        
+        var recentSearchList = UserDefaults.standard.object(forKey: "recentSearchList") as? [String] ?? []
+        recentSearchList.append(text)
+        UserDefaults.standard.set(recentSearchList, forKey: "recentSearchList")
+
         delegate?.searchButtonDidTapped(text: text)
     }
-}
-
-extension SearchView: UITextFieldDelegate {
     
+    func textFieldDidChange(_ textField: UITextField) {
+        delegate?.textFieldDidChange(text: text)
+    }
 }

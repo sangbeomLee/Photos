@@ -17,13 +17,18 @@ class SearchRecentView: UIView {
         return tableView
     }()
     
-    private lazy var headerView = SearchRecentHeaderView(frame: tableView.frame)
+    private lazy var headerView = SearchRecentHeaderView()
+    
+    private var searchList: [String] {
+        UserDefaults.standard.object(forKey: "recentSearchList") as? [String] ?? []
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupView()
         setupLayout()
+        headerView.buttonAction = setClearButtonAction
     }
     
     required init?(coder: NSCoder) {
@@ -36,6 +41,15 @@ class SearchRecentView: UIView {
         
         return recentView
     }
+    
+    func show(_ isShowing: Bool) {
+        if isShowing {
+            tableView.reloadData()
+            isHidden = false
+        } else {
+            isHidden = true
+        }
+    }
 }
 
 private extension SearchRecentView {
@@ -46,7 +60,8 @@ private extension SearchRecentView {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "recentCell")
+        tableView.register(SearchRecentTableViewCell.self, forCellReuseIdentifier: "SearchRecentTableViewCell")
+        tableView.rowHeight = 40
     }
     
     func setupLayout() {
@@ -57,9 +72,12 @@ private extension SearchRecentView {
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            headerView.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+    
+    func setClearButtonAction() {
+        UserDefaults.standard.removeObject(forKey: "recentSearchList")
+        tableView.reloadData()
     }
 }
 
@@ -67,18 +85,16 @@ extension SearchRecentView: UITableViewDelegate {}
 
 extension SearchRecentView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        return searchList.count
     }
     
-    // TODO: Cell 만들어야겠다. cell 누르면 해당 text 가 text 창에 입력 되게 한다.
-    // TODO: Cell 밑에 라인 만들기..
-    // TODO: custom 하게 바꾸기..
     // TODO: UserDefaults 사용하기..
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "recentCell", for: indexPath)
-        cell.textLabel?.text = String(indexPath.row)
-        cell.backgroundColor = .clear
-        cell.textLabel?.textColor = .white
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchRecentTableViewCell", for: indexPath) as? SearchRecentTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: searchList[indexPath.row])
         
         return cell
     }
