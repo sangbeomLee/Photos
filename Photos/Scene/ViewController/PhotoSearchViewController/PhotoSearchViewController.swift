@@ -8,7 +8,11 @@
 import UIKit
 
 class PhotoSearchViewController: UIViewController {
-    weak var coordinator: PhotoSearchCoordinator?
+    weak var coordinator: PhotoSearchCoordinator? {
+        didSet {
+            coordinator?.delegate = self
+        }
+    }
     
     private let searchView: SearchView = SearchView.make()
     
@@ -110,6 +114,7 @@ extension PhotoSearchViewController: UITableViewDataSource {
     }
 }
 
+// TODO: - Delegate 가 너무 많다..! 이 친구는 block property 로 변경하자.
 extension PhotoSearchViewController: SearchViewDelegate {
     func searchButtonDidTapped(text: String?) {
         guard let query = text else { return }
@@ -121,5 +126,20 @@ extension PhotoSearchViewController: SearchViewDelegate {
 extension PhotoSearchViewController: StorageDelegate {
     func didFinishFetchPhotos() {
         tableView.reloadData()
+    }
+}
+
+extension PhotoSearchViewController: PhotoSearchCoordinatorDelegate {
+    func detailViewControllerDidDisappear(storage: Storage, index: Int) {
+        guard let storage = storage as? SearchPhotoStorage else { return }
+        
+        self.storage = storage
+        storage.delegate = self
+        
+        tableView.reloadData()
+        tableView.scrollToRow(at: IndexPath(item: index, section: 0), at: .middle, animated: false)
+        
+        navigationController?.hidesBarsOnSwipe = true
+        tabBarController?.tabBar.isHidden = false
     }
 }

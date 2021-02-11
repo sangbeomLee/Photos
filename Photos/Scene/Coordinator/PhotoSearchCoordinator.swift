@@ -6,7 +6,13 @@
 //
 import UIKit
 
+protocol PhotoSearchCoordinatorDelegate: AnyObject {
+    // TODO: - naming 고민
+    func detailViewControllerDidDisappear(storage: Storage, index: Int)
+}
+
 class PhotoSearchCoordinator: CoordinatorType {
+    weak var delegate: PhotoSearchCoordinatorDelegate?
     weak var parantCoordinator: CoordinatorType?
     var childCoordinators: [CoordinatorType]?
     var navigationController: UINavigationController?
@@ -27,8 +33,15 @@ class PhotoSearchCoordinator: CoordinatorType {
     func createPhotoDetailViewController(storage: SearchPhotoStorage, currentIndex: Int) {
         let photoDetailViewController = PhotoDetailViewController()
         photoDetailViewController.setPhotos(storage, now: currentIndex)
+        photoDetailViewController.coordinator = self
         
         // TODO: - modal 방식의 변화
         navigationController?.pushViewController(photoDetailViewController, animated: true)
+    }
+    
+    func removePhotoDetailViewController(storage: Storage, currentIndex: Int) {
+        navigationController?.popViewController(animated: true)
+        
+        delegate?.detailViewControllerDidDisappear(storage: storage, index: currentIndex)
     }
 }

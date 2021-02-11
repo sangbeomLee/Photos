@@ -10,8 +10,11 @@ import UIKit
 final class PhotoDetailViewController: UIViewController {
     weak var coordinator: CoordinatorType?
     private var storage: Storage?
-    private var currentIndex: Int = 0
     
+    private var currentIndex: Int? {
+        collectionView.indexPathsForVisibleItems.last?.row
+    }
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -19,7 +22,7 @@ final class PhotoDetailViewController: UIViewController {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.isPagingEnabled = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.invalidateIntrinsicContentSize()
+        collectionView.contentInsetAdjustmentBehavior = .never
  
         return collectionView
     }()
@@ -50,8 +53,7 @@ final class PhotoDetailViewController: UIViewController {
     func setPhotos(_ storage: Storage, now currentIndex: Int) {
         self.storage = storage
         storage.delegate = self
-        self.currentIndex = currentIndex
-        
+    
         // collectionView 의 Cell 이 불리기 전에 옮겨준다.
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .centeredHorizontally, animated: false)
@@ -74,6 +76,8 @@ private extension PhotoDetailViewController {
     
     func setupNavigationController() {
         navigationController?.isNavigationBarHidden = true
+        
+        navigationController?.hidesBarsOnSwipe = false
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -81,7 +85,6 @@ private extension PhotoDetailViewController {
         view.addSubview(collectionView)
         view.addSubview(cancleButton)
         cancleButtonBottomConstraint = cancleButton.bottomAnchor.constraint(equalTo: view.topAnchor)
-        print(cancleButtonBottomConstraint.constant)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -106,10 +109,14 @@ private extension PhotoDetailViewController {
 @objc
 private extension PhotoDetailViewController {
     func buttonDidTapped(_ button: UIButton) {
-        guard let storage = storage else { return }
+        guard let storage = storage, let currentIndex = currentIndex else { return }
         
         if let coordinator = coordinator as? PhotosCoordinator {
             coordinator.removePhotoDetailViewController(storage: storage, currentIndex: currentIndex)
+        } else if let coordinator = coordinator as? PhotoSearchCoordinator {
+            coordinator.removePhotoDetailViewController(storage: storage, currentIndex: currentIndex)
+        } else {
+            return
         }
     }
     
@@ -119,6 +126,7 @@ private extension PhotoDetailViewController {
         } else {
             cancleButtonBottomConstraint.constant = 0
         }
+        
         
         UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
@@ -130,6 +138,10 @@ private extension PhotoDetailViewController {
 extension PhotoDetailViewController: UICollectionViewDelegate {}
 
 extension PhotoDetailViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("selectedItemAt: \(indexPath.row)")
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let storage = storage else { return 0 }
         
@@ -143,16 +155,16 @@ extension PhotoDetailViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        currentIndex = indexPath.row
         cell.configure(with: photo)
         
         return cell
     }
+    
 }
 
 extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    
+        
         return CGSize(width: view.frame.width, height: view.frame.height - (view.safeAreaInsets.top + view.safeAreaInsets.bottom))
     }
     

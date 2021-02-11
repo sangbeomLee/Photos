@@ -42,7 +42,6 @@ private extension PhotosViewController {
         // TODO: - Font 추가
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.hidesBarsOnSwipe = true
-        navigationController?.tabBarController?.hidesBottomBarWhenPushed = true
     }
     
     func setupTableView() {
@@ -103,8 +102,12 @@ extension PhotosViewController: PhotosCoordinatorDelegate {
         guard let storage = storage as? PhotoStorage else { return }
         
         self.storage = storage
+        storage.delegate = self
         
         tableView.reloadData()
-        tableView.scrollToRow(at: IndexPath(item: index, section: 0), at: .bottom, animated: false)
+        tableView.scrollToRow(at: IndexPath(item: index, section: 0), at: .middle, animated: false)
+        
+        navigationController?.hidesBarsOnSwipe = true
+        tabBarController?.tabBar.isHidden = false
     }
 }
