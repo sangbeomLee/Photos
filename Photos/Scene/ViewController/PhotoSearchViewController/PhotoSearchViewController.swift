@@ -28,10 +28,11 @@ class PhotoSearchViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupView()
         setupStorage()
         setupLayout()
+        recentView.recentCellAction = recentViewAction(text:)
     }
 }
 
@@ -86,6 +87,11 @@ private extension PhotoSearchViewController {
     func setupStorage() {
         storage.delegate = self
     }
+    
+    func recentViewAction(text: String) {
+        searchView.text = text
+        searchButtonDidTapped(text: text)
+    }
 }
 
 extension PhotoSearchViewController: UITableViewDelegate {
@@ -135,14 +141,17 @@ extension PhotoSearchViewController: SearchViewDelegate {
     func searchButtonDidTapped(text: String?) {
         guard let query = text else { return }
         
+        view.endEditing(true)
         storage.fetchSearchPhotos(with: query)
     }
 }
 
 extension PhotoSearchViewController: StorageDelegate {
-    func didFinishFetchPhotos() {
-        tableView.reloadData()
+    func didFinishFetchPhotos(error: Error?) {
+        guard error == nil else { return }
         recentView.show(false)
+        
+        tableView.reloadData()
         tableView.isHidden = false
     }
 }

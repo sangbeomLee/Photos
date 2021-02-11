@@ -174,7 +174,7 @@ extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension PhotoDetailViewController: StorageDelegate {
-    func didFinishFetchPhotos() {
+    func didFinishFetchPhotos(error: Error?) {
         collectionView.reloadData()
     }
 }

@@ -70,7 +70,6 @@ extension PhotosViewController: UITableViewDelegate {
 
 extension PhotosViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         coordinator?.createPhotoDetailViewController(storage: storage, currentIndex: indexPath.row)
     }
     
@@ -92,7 +91,7 @@ extension PhotosViewController: UITableViewDataSource {
 }
 
 extension PhotosViewController: StorageDelegate {
-    func didFinishFetchPhotos() {
+    func didFinishFetchPhotos(error: Error?) {
         if !loadingView.isHidden {
             loadingView.isHidden = true
         }

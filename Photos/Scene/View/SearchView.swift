@@ -16,7 +16,13 @@ class SearchView: UIView {
     weak var delegate: SearchViewDelegate?
     
     var text: String? {
-        textField.text
+        get {
+            textField.text
+        }
+        
+        set {
+            textField.text = newValue
+        }
     }
     
     override init(frame: CGRect) {

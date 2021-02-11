@@ -31,6 +31,8 @@ class SearchRecentView: UIView {
         headerView.buttonAction = setClearButtonAction
     }
     
+    var recentCellAction: ((_ text: String) -> Void)?
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,6 +86,10 @@ private extension SearchRecentView {
 extension SearchRecentView: UITableViewDelegate {}
 
 extension SearchRecentView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        recentCellAction?(searchList[indexPath.row])
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchList.count
     }

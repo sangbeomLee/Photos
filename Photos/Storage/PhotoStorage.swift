@@ -23,22 +23,19 @@ class PhotoStorage: Storage {
     }
     
     func fetchPhotos() {
-        let page = nextPage
-        // TODO: - storage.lastIndex 이부분 변경
-        lastIndex += 10
-        
-        PhotoAPIProvider.shared.fetchPhotos(page) {[weak self] result in
+        PhotoAPIProvider.shared.fetchPhotos(nextPage) {[weak self] result in
             guard let self = self else { return }
             
-            switch result {
-            case .success(let photos):
-                self.store(photos)
-            case .failure(let error):
-                // TODO: - Error 처리
-                print(error)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let photos):
+                    self.store(photos)
+                    self.delegate?.didFinishFetchPhotos(error: nil)
+                case .failure(let error):
+                    // TODO: - Error 처리
+                    self.delegate?.didFinishFetchPhotos(error: error)
+                }
             }
-            
-            self.delegate?.didFinishFetchPhotos()
         }
     }
 }

@@ -20,24 +20,27 @@ class SearchPhotoStorage: Storage {
     
     func fetchSearchPhotos(with query: String?) {
         guard let query = query else { return }
-        self.query = query
-        
-        let page = nextPage
-        // TODO: - storage.lastIndex 이부분 변경
-        lastIndex += 10
-        
-        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: page) {[weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let photos):
-                self.store(photos)
-            case .failure(let error):
-                // TODO: - Error 처리
-                print(error)
-            }
-            
-            self.delegate?.didFinishFetchPhotos()
+
+        if isNew(query) {
+            removeAll()
+            self.query = query
         }
+        
+        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: nextPage) {[weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let photos):
+                    self.store(photos)
+                    self.delegate?.didFinishFetchPhotos(error: nil)
+                case .failure(let error):
+                    self.delegate?.didFinishFetchPhotos(error: error)
+                }
+            } 
+        }
+    }
+    
+    private func isNew(_ query: String) -> Bool {
+        self.query != query
     }
 }

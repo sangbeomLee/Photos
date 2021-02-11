@@ -59,9 +59,7 @@ class PhotoAPIProvider {
                 // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
                 let photoModels = searchPhotoResponse.results.map { PhotoModel(response: $0) }
                 self?.downloadImages(for: photoModels) { photoModels in
-                    DispatchQueue.main.async {
-                        completion(FetchResult.success(photoModels))
-                    }
+                    completion(FetchResult.success(photoModels))
                 }
             case .failure(let error):
                 completion(FetchResult.failure(error))
@@ -81,8 +79,7 @@ private extension PhotoAPIProvider {
                     completion(FetchResult.failure(APIError.parseJsonError))
                 }
             case .failure(let error):
-                // TODO: - error 처리
-                print(error)
+                completion(FetchResult.failure(error))
             }
         }
     }
@@ -102,7 +99,6 @@ private extension PhotoAPIProvider {
                 case .success(let image):
                     photoModels[index].thumbImage = image
                 case .failure(let error):
-                    // TODO: - Error
                     print(error)
                 }
                 dispatchGroup.leave()

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol StorageDelegate: AnyObject {
-    func didFinishFetchPhotos()
+    func didFinishFetchPhotos(error: Error?)
 }
 
 class Storage {
@@ -16,7 +16,9 @@ class Storage {
     
     var photos: [PhotoModel] = []
     var currentPage: Int = 0
-    var lastIndex = 0
+    var lastIndex: Int {
+        photos.count - 1
+    }
     
     var nextPage: Int {
         currentPage + 1
@@ -33,6 +35,11 @@ class Storage {
     func store(_ photos: [PhotoModel]) {
         self.photos.append(contentsOf: photos)
         currentPage += 1
+    }
+    
+    func removeAll() {
+        photos.removeAll()
+        currentPage = 0
     }
     
     // TODO: - 겹친다 더 나은 방법을 생각 해 보자.
