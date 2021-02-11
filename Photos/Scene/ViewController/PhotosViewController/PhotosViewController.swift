@@ -15,14 +15,13 @@ class PhotosViewController: UIViewController {
     }
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingView: UIView!
     
     private var storage = PhotoStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .red
-        tableView.backgroundColor = .black
+ 
         setupView()
         setupStorage()
     }
@@ -50,6 +49,7 @@ private extension PhotosViewController {
         tableView.register(UINib(nibName: "PhotosTableViewCell", bundle: nil), forCellReuseIdentifier: "PhotosTableViewCell")
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = .black
     }
     
     func setupStorage() {
@@ -93,6 +93,10 @@ extension PhotosViewController: UITableViewDataSource {
 
 extension PhotosViewController: StorageDelegate {
     func didFinishFetchPhotos() {
+        if !loadingView.isHidden {
+            loadingView.isHidden = true
+        }
+        
         tableView.reloadData()
     }
 }

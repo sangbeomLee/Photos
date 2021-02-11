@@ -15,6 +15,7 @@ class PhotoSearchViewController: UIViewController {
     }
     
     private let searchView: SearchView = SearchView.make()
+    private let recentView: SearchRecentView = SearchRecentView.make()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -62,6 +63,7 @@ private extension PhotoSearchViewController {
     func setupLayout() {
         view.addSubview(searchView)
         view.addSubview(tableView)
+        view.addSubview(recentView)
         
         NSLayoutConstraint.activate([
             searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -73,6 +75,11 @@ private extension PhotoSearchViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            recentView.topAnchor.constraint(equalTo: searchView.bottomAnchor),
+            recentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            recentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            recentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
