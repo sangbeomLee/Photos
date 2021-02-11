@@ -50,6 +50,7 @@ private extension PhotosViewController {
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .black
+        tableView.separatorStyle = .none
     }
     
     func setupStorage() {

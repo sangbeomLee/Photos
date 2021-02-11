@@ -59,6 +59,7 @@ private extension PhotoSearchViewController {
         // TODO: - self sizing 에 문제가 있다. 이를 해결하자.
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
     }
     
     func setupLayout() {
@@ -127,7 +128,6 @@ extension PhotoSearchViewController: UITableViewDataSource {
     }
 }
 
-// TODO: - Delegate 가 너무 많다..! 이 친구는 block property 로 변경하자.
 extension PhotoSearchViewController: SearchViewDelegate {
     func textFieldDidChange(text: String?) {
         guard let text = text else { return }
@@ -148,7 +148,11 @@ extension PhotoSearchViewController: SearchViewDelegate {
 
 extension PhotoSearchViewController: StorageDelegate {
     func didFinishFetchPhotos(error: Error?) {
-        guard error == nil else { return }
+        guard error == nil else {
+            print("error")
+            coordinator?.showAlert()
+            return
+        }
         recentView.show(false)
         
         tableView.reloadData()

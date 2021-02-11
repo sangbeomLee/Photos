@@ -15,7 +15,7 @@ class PhotoStorage: Storage {
     }
  
     override func photoFromList(at index: Int) -> PhotoModel? {
-        if sholudDownloadNextPage(index: index) {
+        if sholudDownloadNextPage(index: index), !isFetching {
             fetchPhotos()
         }
         
@@ -23,8 +23,10 @@ class PhotoStorage: Storage {
     }
     
     func fetchPhotos() {
+        isFetching = true
         PhotoAPIProvider.shared.fetchPhotos(nextPage) {[weak self] result in
             guard let self = self else { return }
+            self.isFetching = false
             
             DispatchQueue.main.async {
                 switch result {

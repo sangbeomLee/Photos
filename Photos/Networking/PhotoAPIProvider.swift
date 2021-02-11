@@ -11,6 +11,7 @@ enum APIError: Error {
     case parseJsonError
     case downloadImageError
     case requestError
+    case noMoreData
 }
 
 class PhotoAPIProvider {
@@ -36,6 +37,12 @@ class PhotoAPIProvider {
             case .success(let photosResponse):
                 // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
                 let photoModels = photosResponse.map { PhotoModel(response: $0) }
+                
+                if photoModels.isEmpty {
+                    completion(FetchResult.failure(APIError.noMoreData))
+                    return
+                }
+                
                 self?.downloadImages(for: photoModels) { photoModels in
                     DispatchQueue.main.async {
                         completion(FetchResult.success(photoModels))
@@ -52,12 +59,19 @@ class PhotoAPIProvider {
             completion(FetchResult.failure(APIError.requestError))
             return
         }
-
+        
         fetch(request) {[weak self] (result: FetchResult<SearchPhotoResponse>) in
             switch result {
             case .success(let searchPhotoResponse):
                 // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
                 let photoModels = searchPhotoResponse.results.map { PhotoModel(response: $0) }
+                // 받아온 데이터가 없을 때 -> 모든 데이터를 받아왔을 때
+    
+                if photoModels.isEmpty {
+                    completion(FetchResult.failure(APIError.noMoreData))
+                    return
+                }
+                
                 self?.downloadImages(for: photoModels) { photoModels in
                     completion(FetchResult.success(photoModels))
                 }

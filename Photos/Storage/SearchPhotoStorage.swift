@@ -11,7 +11,7 @@ class SearchPhotoStorage: Storage {
     var query: String?
     
     override func photoFromList(at index: Int) -> PhotoModel? {
-        if sholudDownloadNextPage(index: index) {
+        if sholudDownloadNextPage(index: index), !isFetching {
             fetchSearchPhotos(with: query)
         }
         
@@ -26,8 +26,12 @@ class SearchPhotoStorage: Storage {
             self.query = query
         }
         
+        isFetching = true
+        
         PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: nextPage) {[weak self] result in
             guard let self = self else { return }
+            self.isFetching = false
+            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let photos):

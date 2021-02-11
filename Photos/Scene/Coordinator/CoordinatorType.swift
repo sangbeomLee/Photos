@@ -14,3 +14,10 @@ protocol CoordinatorType: AnyObject {
     
     func start()
 }
+
+extension CoordinatorType {
+    func showAlert() {
+        let errorAlert = ErrorAlertController.make()
+        navigationController?.present(errorAlert, animated: true, completion: nil)
+    }
+}

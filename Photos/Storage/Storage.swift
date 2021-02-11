@@ -16,6 +16,8 @@ class Storage {
     
     var photos: [PhotoModel] = []
     var currentPage: Int = 0
+    var isFetching: Bool = false
+    
     var lastIndex: Int {
         photos.count - 1
     }

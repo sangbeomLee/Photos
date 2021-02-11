@@ -23,6 +23,7 @@
 		D39808BC25D51F5A00E1CC78 /* SearchRecentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39808BB25D51F5A00E1CC78 /* SearchRecentView.swift */; };
 		D39808BF25D5215800E1CC78 /* SearchRecentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39808BE25D5215800E1CC78 /* SearchRecentHeaderView.swift */; };
 		D39808C225D55DE500E1CC78 /* SearchRecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39808C125D55DE500E1CC78 /* SearchRecentTableViewCell.swift */; };
+		D39808C825D5A06F00E1CC78 /* ErrorAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39808C725D5A06F00E1CC78 /* ErrorAlertController.swift */; };
 		D3D092E025D1031000CB56CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D092DF25D1031000CB56CA /* AppDelegate.swift */; };
 		D3D092E925D1031200CB56CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3D092E825D1031200CB56CA /* Assets.xcassets */; };
 		D3D092EC25D1031200CB56CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D092EA25D1031200CB56CA /* LaunchScreen.storyboard */; };
@@ -59,6 +60,7 @@
 		D39808BB25D51F5A00E1CC78 /* SearchRecentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentView.swift; sourceTree = "<group>"; };
 		D39808BE25D5215800E1CC78 /* SearchRecentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentHeaderView.swift; sourceTree = "<group>"; };
 		D39808C125D55DE500E1CC78 /* SearchRecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentTableViewCell.swift; sourceTree = "<group>"; };
+		D39808C725D5A06F00E1CC78 /* ErrorAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertController.swift; sourceTree = "<group>"; };
 		D3D092DC25D1031000CB56CA /* Photos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D092DF25D1031000CB56CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3D092E825D1031200CB56CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,6 +99,24 @@
 				D354258125D2D02D006C449E /* PhotoSearchViewController.swift */,
 			);
 			path = PhotoSearchViewController;
+			sourceTree = "<group>";
+		};
+		D39808C425D5881000E1CC78 /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				D354258925D2D15F006C449E /* SearchView.swift */,
+				D39808BB25D51F5A00E1CC78 /* SearchRecentView.swift */,
+				D39808BE25D5215800E1CC78 /* SearchRecentHeaderView.swift */,
+			);
+			path = SearchView;
+			sourceTree = "<group>";
+		};
+		D39808C625D5A05600E1CC78 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				D39808C725D5A06F00E1CC78 /* ErrorAlertController.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		D3D092D325D1031000CB56CA = {
@@ -143,6 +163,7 @@
 		D3D0930A25D108ED00CB56CA /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				D39808C625D5A05600E1CC78 /* Alert */,
 				D3D0932825D1205D00CB56CA /* View */,
 				D3D0931525D1172100CB56CA /* Coordinator */,
 				D3D0930C25D108FB00CB56CA /* ViewController */,
@@ -195,10 +216,8 @@
 			isa = PBXGroup;
 			children = (
 				D3D0932925D1206300CB56CA /* Cell */,
-				D354258925D2D15F006C449E /* SearchView.swift */,
+				D39808C425D5881000E1CC78 /* SearchView */,
 				D39808B825D5182200E1CC78 /* LoadingView.swift */,
-				D39808BB25D51F5A00E1CC78 /* SearchRecentView.swift */,
-				D39808BE25D5215800E1CC78 /* SearchRecentHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -323,6 +342,7 @@
 				D354258325D2D02D006C449E /* PhotoSearchViewController.swift in Sources */,
 				D3D0931B25D1188400CB56CA /* AppCoordinator.swift in Sources */,
 				D3D0931E25D118DE00CB56CA /* PhotosCoordinator.swift in Sources */,
+				D39808C825D5A06F00E1CC78 /* ErrorAlertController.swift in Sources */,
 				D3D0933B25D134FC00CB56CA /* PhotoResponse.swift in Sources */,
 				D3D0932C25D120C300CB56CA /* PhotosTableViewCell.swift in Sources */,
 				D354258A25D2D15F006C449E /* SearchView.swift in Sources */,
