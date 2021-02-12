@@ -7,6 +7,12 @@
 
 import UIKit
 
+private enum Constant {
+    static var navigationTitle: String { "PHOTOS" }
+    static let cellName: String = "PhotosTableViewCell"
+    static let cellIdentifier: String = "PhotosTableViewCell"
+}
+
 class PhotosViewController: UIViewController {
     weak var coordinator: PhotosCoordinator? {
         didSet {
@@ -27,6 +33,8 @@ class PhotosViewController: UIViewController {
     }
 }
 
+// MARK: - Setup
+
 private extension PhotosViewController {
     func setupView() {
         setupNavigation()
@@ -34,7 +42,7 @@ private extension PhotosViewController {
     }
     
     func setupNavigation() {
-        navigationItem.title = "PHOTOS"
+        navigationItem.title = Constant.navigationTitle
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = false
@@ -46,7 +54,7 @@ private extension PhotosViewController {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "PhotosTableViewCell", bundle: nil), forCellReuseIdentifier: "PhotosTableViewCell")
+        tableView.register(UINib(nibName: Constant.cellName, bundle: nil), forCellReuseIdentifier: Constant.cellIdentifier)
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .black
@@ -58,6 +66,7 @@ private extension PhotosViewController {
     }
 }
 
+// MARK: - UITableViewDelegate
 
 extension PhotosViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -79,9 +88,8 @@ extension PhotosViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosTableViewCell", for: indexPath) as? PhotosTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constant.cellIdentifier, for: indexPath) as? PhotosTableViewCell,
               let photo = storage.photos(at: indexPath.row) else {
-            // TODO: 오류처리
             return UITableViewCell()
         }
 
@@ -90,6 +98,8 @@ extension PhotosViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - StorageDelegate
 
 extension PhotosViewController: StorageDelegate {
     func didFinishFetchPhotos(error: Error?) {
@@ -100,6 +110,8 @@ extension PhotosViewController: StorageDelegate {
         tableView.reloadData()
     }
 }
+
+// MARK: - PhotosCoordinatorDelegate
 
 extension PhotosViewController: PhotosCoordinatorDelegate {
     func detailViewControllerDidDisappear(storage: Storage, index: Int) {

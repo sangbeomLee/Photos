@@ -97,14 +97,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D354258625D2D030006C449E /* PhotoSearchViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D354258125D2D02D006C449E /* PhotoSearchViewController.swift */,
-			);
-			path = PhotoSearchViewController;
-			sourceTree = "<group>";
-		};
 		D39808C425D5881000E1CC78 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +174,7 @@
 				D3D0930F25D1091F00CB56CA /* PhotosViewController */,
 				D354256F25D28CE4006C449E /* PhotoDetailViewController.swift */,
 				D354257225D2ACDF006C449E /* MainTabBarController.swift */,
-				D354258625D2D030006C449E /* PhotoSearchViewController */,
+				D354258125D2D02D006C449E /* PhotoSearchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

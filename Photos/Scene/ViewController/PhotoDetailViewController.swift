@@ -7,6 +7,15 @@
 
 import UIKit
 
+private enum Constant {
+    static let cellIdentifier: String = "PhotoDetailCollectionViewCell"
+}
+
+private enum Design {
+    static let cancleDownConstraint: CGFloat = 40.0
+    static let cancelImage = UIImage(named: "cancleIcon")
+}
+
 final class PhotoDetailViewController: UIViewController {
     weak var coordinator: CoordinatorType?
     private var storage: Storage?
@@ -14,7 +23,10 @@ final class PhotoDetailViewController: UIViewController {
     private var currentIndex: Int? {
         collectionView.indexPathsForVisibleItems.last?.row
     }
-
+    private var cancleButtonBottomConstraint = NSLayoutConstraint()
+    
+    // MARK: - Components
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -30,7 +42,7 @@ final class PhotoDetailViewController: UIViewController {
     private var cancleButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "cancleIcon")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(Design.cancelImage?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFill
         button.contentVerticalAlignment = .fill
@@ -41,14 +53,14 @@ final class PhotoDetailViewController: UIViewController {
         return button
     }()
     
-    private var cancleButtonBottomConstraint = NSLayoutConstraint()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
         setupLayout()
     }
+    
+    // MARK: - Func
     
     func setPhotos(_ storage: Storage, now currentIndex: Int) {
         self.storage = storage
@@ -60,6 +72,8 @@ final class PhotoDetailViewController: UIViewController {
         }
     }
 }
+
+// MARK: - Setup
 
 private extension PhotoDetailViewController {
     func setupView() {
@@ -102,9 +116,11 @@ private extension PhotoDetailViewController {
     func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PhotoDetailCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoDetailCollectionViewCell")
+        collectionView.register(PhotoDetailCollectionViewCell.self, forCellWithReuseIdentifier: Constant.cellIdentifier)
     }
 }
+
+// MARK: - objc func
 
 @objc
 private extension PhotoDetailViewController {
@@ -122,11 +138,10 @@ private extension PhotoDetailViewController {
     
     func viewDidTapped() {
         if cancleButtonBottomConstraint.constant == 0 {
-            cancleButtonBottomConstraint.constant = view.safeAreaInsets.top + 40
+            cancleButtonBottomConstraint.constant = view.safeAreaInsets.top + Design.cancleDownConstraint
         } else {
             cancleButtonBottomConstraint.constant = 0
         }
-        
         
         UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
@@ -135,7 +150,11 @@ private extension PhotoDetailViewController {
     
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension PhotoDetailViewController: UICollectionViewDelegate {}
+
+// MARK: - UICollectionViewDataSource
 
 extension PhotoDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -145,7 +164,7 @@ extension PhotoDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCollectionViewCell", for: indexPath) as? PhotoDetailCollectionViewCell,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.cellIdentifier, for: indexPath) as? PhotoDetailCollectionViewCell,
               let storage = storage,
               let photo = storage.photos(at: indexPath.row) else {
             return UICollectionViewCell()
@@ -158,6 +177,8 @@ extension PhotoDetailViewController: UICollectionViewDataSource {
     
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -168,6 +189,8 @@ extension PhotoDetailViewController: UICollectionViewDelegateFlowLayout {
         return 0
     }
 }
+
+// MARK: - StorageDelegate
 
 extension PhotoDetailViewController: StorageDelegate {
     func didFinishFetchPhotos(error: Error?) {
