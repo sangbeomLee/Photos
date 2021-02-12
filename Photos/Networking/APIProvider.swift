@@ -24,8 +24,7 @@ class APIProvider {
     init(downloader: Downloader) {
         self.downloader = downloader
     }
-    
-    // TODO: - 비슷한 부분 공통화 할 수 있을까?
+
     func fetchPhotos(_ page: Int, completion: @escaping (FetchResult<[PhotoModel]>) -> Void) {
         guard let request = APICenter.getPhotosRequest(page: page) else {
             completion(FetchResult.failure(APIError.requestError))
@@ -35,7 +34,6 @@ class APIProvider {
         fetch(request) {[weak self] (result: FetchResult<[PhotoResponse]>) in
             switch result {
             case .success(let photosResponse):
-                // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
                 let photoModels = photosResponse.map { PhotoModel(response: $0) }
                 
                 if photoModels.isEmpty {
@@ -61,10 +59,8 @@ class APIProvider {
         fetch(request) {[weak self] (result: FetchResult<SearchPhotoResponse>) in
             switch result {
             case .success(let searchPhotoResponse):
-                // TODO: - 뭔가 photosModels 어감이 이상하다. naming 개선 해 보자
                 let photoModels = searchPhotoResponse.results.map { PhotoModel(response: $0) }
-                // 받아온 데이터가 없을 때 -> 모든 데이터를 받아왔을 때
-    
+ 
                 if photoModels.isEmpty {
                     completion(FetchResult.failure(APIError.noMoreData))
                     return
@@ -79,6 +75,8 @@ class APIProvider {
         }
     }
 }
+
+// MARK: - private Func
 
 private extension APIProvider {
     func fetch<T: Codable>(_ request: URLRequest, completion: @escaping (FetchResult<T>) -> Void) {
@@ -96,13 +94,12 @@ private extension APIProvider {
         }
     }
     
-    // Download image 까지 완료 한 후 반환한다.
+    // disPatchGruop 을 이용하여 Download image 까지 완료 한 후 반환한다.
     func downloadImages(for photoModels: [PhotoModel], completion: @escaping ([PhotoModel]) -> Void) {
         var photoModels = photoModels
         let dispatchGroup = DispatchGroup()
         
         photoModels.enumerated().forEach {[weak self] (index, photo) in
-            // TODO: - 없을때 처리 -> 딱히 안해줘도 되려나
             guard let url = photo.url else { return }
             
             dispatchGroup.enter()
@@ -117,14 +114,15 @@ private extension APIProvider {
             }
         }
         
-        // TODO: - .main 어떤것인지 알기.
         dispatchGroup.notify(queue: .main) {
             completion(photoModels)
         }
     }
     
     func downloadImage(from url: URL, completion: @escaping (FetchResult<UIImage>) -> Void) {
-        downloader.downloadData(from: url) { result in
+        let request = URLRequest(url: url)
+        
+        downloader.downloadData(from: request) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):

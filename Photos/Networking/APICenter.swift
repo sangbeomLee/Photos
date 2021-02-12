@@ -7,6 +7,22 @@
 
 import UIKit
 
+// MARK: - private enum
+
+private enum Constant {
+    static let http: String = "http"
+    static let host: String = "api.unsplash.com"
+    
+    static let perPageCount: Int = 10
+}
+
+private enum Query {
+    static let page: String = "page"
+    static let perPage: String = "perPage"
+    static let query: String = "query"
+    static let clientId: String = "client_id"
+}
+
 private enum API {
     case photos
     case search
@@ -23,13 +39,14 @@ private enum API {
 
 struct APICenter {
     private static let apiKey = APIKey.key
-    private static let host = "api.unsplash.com"
+    private static let host = Constant.host
     
-    // TODO: - 좀 더 간결하게 할 수 있을 것 같다. -> enum QueryItems 만들어서 간결하게 가능할듯
-    static func getPhotosRequest(page: Int, per_page: Int = 10) -> URLRequest? {
+    // MARK: - static func
+    
+    static func getPhotosRequest(page: Int, per_page: Int = Constant.perPageCount) -> URLRequest? {
         let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "page", value: String(page)),
-            URLQueryItem(name: "per_page", value: String(per_page)),
+            URLQueryItem(name: Query.page, value: String(page)),
+            URLQueryItem(name: Query.perPage, value: String(per_page)),
             keyQueryItem
         ]
         
@@ -38,31 +55,17 @@ struct APICenter {
         return URLRequest(url: url)
     }
     
-    static func getSearchPhotosRequest(for query: String, page: Int = 1, per_page: Int = 10) -> URLRequest? {
+    static func getSearchPhotosRequest(for query: String, page: Int, per_page: Int = Constant.perPageCount) -> URLRequest? {
         let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "query", value: String(query)),
-            URLQueryItem(name: "page", value: String(page)),
-            URLQueryItem(name: "per_page", value: String(per_page)),
+            URLQueryItem(name: Query.query, value: String(query)),
+            URLQueryItem(name: Query.page, value: String(page)),
+            URLQueryItem(name: Query.perPage, value: String(per_page)),
             keyQueryItem
         ]
         
         guard let url = url(path: API.search.path, queryItems: queryItems) else { return nil }
         
         return URLRequest(url: url)
-    }
-}
-
-private extension APICenter {
-    static var baseUrlComponents: URLComponents {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = host
-        
-        return components
-    }
-    
-    static var keyQueryItem: URLQueryItem {
-        URLQueryItem(name: "client_id", value: APIKey.key)
     }
     
     static func url(path: String, queryItems: [URLQueryItem]) -> URL? {
@@ -71,5 +74,21 @@ private extension APICenter {
         components.queryItems = queryItems
         
         return components.url
+    }
+}
+
+// MARK: - static var
+
+private extension APICenter {
+    static var baseUrlComponents: URLComponents {
+        var components = URLComponents()
+        components.scheme = Constant.http
+        components.host = host
+        
+        return components
+    }
+    
+    static var keyQueryItem: URLQueryItem {
+        URLQueryItem(name: Query.clientId, value: APIKey.key)
     }
 }

@@ -4,18 +4,23 @@
 //
 //  Created by 이상범 on 2021/02/08.
 //
-
 import Foundation
 
-import UIKit
-
 enum DownloaderError: Error {
-    case dataError
     case responseError
-    case fetchError
+    case unownedError
+    
+    var description: String {
+        switch self {
+        case .responseError:
+            return "다운로드 중 잘못된 응답을 받았습니다."
+        case .unownedError:
+            return "다운로드 중 알수없는 오류가 있습니다."
+        }
+    }
 }
 
-public class Downloader {
+class Downloader {
     typealias DownloadedDataResult = Result<Data, Error>
     
     static var shared = Downloader()
@@ -26,45 +31,20 @@ public class Downloader {
         self.session = session
     }
     
-    // TODO: - Request 를 통한 download 만들기.
-    // TODO: - 두개를 하나로 합치는 방법을 생각해보기
     func downloadData(from request: URLRequest, completion: @escaping (DownloadedDataResult) -> ()) {
         self.session.dataTask(with: request) { (data, response, error) in
             guard error == nil else{
-                completion(DownloadedDataResult.failure(DownloaderError.fetchError))
+                completion(DownloadedDataResult.failure(DownloaderError.unownedError))
                 return
             }
 
-            // TODO: - HTTPResponse 관련 추가 개선
-            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == HTTPStatus.success.code else {
                 completion(DownloadedDataResult.failure(DownloaderError.responseError))
                 return
             }
             
             guard let data = data else {
-                completion(DownloadedDataResult.failure(DownloaderError.dataError))
-                return
-            }
-            
-            completion(DownloadedDataResult.success(data))
-        }.resume()
-    }
-    
-    func downloadData(from url: URL, completion: @escaping (DownloadedDataResult) -> ()) {
-        self.session.dataTask(with: url) { (data, response, error) in
-            guard error == nil else{
-                completion(DownloadedDataResult.failure(DownloaderError.fetchError))
-                return
-            }
-
-            // TODO: - HTTPResponse 관련 추가 개선
-            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-                completion(DownloadedDataResult.failure(DownloaderError.responseError))
-                return
-            }
-            
-            guard let data = data else {
-                completion(DownloadedDataResult.failure(DownloaderError.dataError))
+                completion(DownloadedDataResult.failure(DownloaderError.unownedError))
                 return
             }
             

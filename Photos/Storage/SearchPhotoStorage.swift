@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchPhotoStorage: Storage {
+final class SearchPhotoStorage: Storage {
     var query: String?
     
     override func photos(at index: Int) -> PhotoModel? {

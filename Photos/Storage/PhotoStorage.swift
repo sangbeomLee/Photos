@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotoStorage: Storage {
+final class PhotoStorage: Storage {
     let apiProvider = APIProvider.shared
     
     override init() {

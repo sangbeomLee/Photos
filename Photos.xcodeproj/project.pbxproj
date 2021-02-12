@@ -15,6 +15,7 @@
 		D354257F25D2B1FF006C449E /* PhotoSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D354257E25D2B1FF006C449E /* PhotoSearchCoordinator.swift */; };
 		D354258325D2D02D006C449E /* PhotoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D354258125D2D02D006C449E /* PhotoSearchViewController.swift */; };
 		D354258A25D2D15F006C449E /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D354258925D2D15F006C449E /* SearchView.swift */; };
+		D3587C5F25D6C31500CDED9A /* HTTPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3587C5E25D6C31500CDED9A /* HTTPStatus.swift */; };
 		D389C5FD25D39FC70015589D /* APICenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389C5FC25D39FC70015589D /* APICenter.swift */; };
 		D389C60425D3ED350015589D /* PhotoDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389C60325D3ED350015589D /* PhotoDetailCollectionViewCell.swift */; };
 		D389C60825D417BE0015589D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389C60725D417BE0015589D /* Storage.swift */; };
@@ -52,6 +53,7 @@
 		D354257E25D2B1FF006C449E /* PhotoSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSearchCoordinator.swift; sourceTree = "<group>"; };
 		D354258125D2D02D006C449E /* PhotoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSearchViewController.swift; sourceTree = "<group>"; };
 		D354258925D2D15F006C449E /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D3587C5E25D6C31500CDED9A /* HTTPStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatus.swift; sourceTree = "<group>"; };
 		D389C5FC25D39FC70015589D /* APICenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICenter.swift; sourceTree = "<group>"; };
 		D389C60325D3ED350015589D /* PhotoDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D389C60725D417BE0015589D /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				D3D0933525D12BC500CB56CA /* APIProvider.swift */,
 				D3D0934025D1637700CB56CA /* APIKey.swift */,
 				D389C5FC25D39FC70015589D /* APICenter.swift */,
+				D3587C5E25D6C31500CDED9A /* HTTPStatus.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				D39808C225D55DE500E1CC78 /* SearchRecentTableViewCell.swift in Sources */,
 				D354256425D235D8006C449E /* UIImage+Extension.swift in Sources */,
 				D354257F25D2B1FF006C449E /* PhotoSearchCoordinator.swift in Sources */,
+				D3587C5F25D6C31500CDED9A /* HTTPStatus.swift in Sources */,
 				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
 				D3D0933625D12BC500CB56CA /* APIProvider.swift in Sources */,
 				D354257325D2ACDF006C449E /* MainTabBarController.swift in Sources */,
