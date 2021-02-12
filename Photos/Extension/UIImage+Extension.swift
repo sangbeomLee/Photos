@@ -11,4 +11,27 @@ extension UIImage {
     var cropRatio: CGFloat {
         CGFloat(size.height / size.width)
     }
+    
+    func resizedImage(targetSize: CGSize) -> UIImage? {
+        let widthRaito = targetSize.width / size.width
+        let heightRaito = targetSize.height / size.height
+        let newSize: CGSize
+        
+        if heightRaito < widthRaito {
+            newSize = CGSize(width: size.width * heightRaito, height: size.height * heightRaito)
+        } else {
+            newSize = CGSize(width: size.width * widthRaito, height: size.height * widthRaito)
+        }
+        
+        // TODO: - 어떤 원리로 resizing 하는지 알아보자.
+        // Actually do the resizing to the rect using the ImageContext stuff
+        
+        let renderFormat = UIGraphicsImageRendererFormat.default()
+        let renderer = UIGraphicsImageRenderer(size: newSize, format: renderFormat)
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        let newImage = renderer.image { _ in self.draw(in: rect)}
+        
+        return newImage
+    }
 }

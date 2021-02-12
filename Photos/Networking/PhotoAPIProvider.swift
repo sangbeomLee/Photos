@@ -44,9 +44,7 @@ class PhotoAPIProvider {
                 }
                 
                 self?.downloadImages(for: photoModels) { photoModels in
-                    DispatchQueue.main.async {
-                        completion(FetchResult.success(photoModels))
-                    }
+                    completion(FetchResult.success(photoModels))
                 }
             case .failure(let error):
                 completion(FetchResult.failure(error))

@@ -96,6 +96,7 @@ extension PhotosViewController: StorageDelegate {
         if !loadingView.isHidden {
             loadingView.isHidden = true
         }
+        print(storage.count)
         
         tableView.reloadData()
     }
