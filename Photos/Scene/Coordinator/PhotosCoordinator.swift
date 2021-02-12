@@ -8,7 +8,6 @@
 import UIKit
 
 protocol PhotosCoordinatorDelegate: AnyObject {
-    // TODO: - naming 고민
     func detailViewControllerDidDisappear(storage: Storage, index: Int)
 }
 
@@ -24,25 +23,17 @@ class PhotosCoordinator: CoordinatorType {
     }
     
     func start() {
-        guard let photosViewController = PhotosViewController.instantiatingFromNib() else {
-            // TODO: Error 처리
-            print("error: PhotosCoordinator Error")
-            return
-        }
-        
+        guard let photosViewController = PhotosViewController.instantiatingFromNib() else { return }
         photosViewController.coordinator = self
         
         navigationController?.pushViewController(photosViewController, animated: true)
     }
-    
-    // TODO: - ChildCoordinator 삭제요망
     
     func createPhotoDetailViewController(storage: Storage, currentIndex: Int) {
         let photoDetailViewController = PhotoDetailViewController()
         photoDetailViewController.coordinator = self
         photoDetailViewController.setPhotos(storage, now: currentIndex)
         
-        // TODO: - modal 방식의 변화
         navigationController?.pushViewController(photoDetailViewController, animated: true)
     }
     

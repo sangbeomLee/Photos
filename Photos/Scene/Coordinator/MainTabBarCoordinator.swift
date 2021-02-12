@@ -35,6 +35,9 @@ class MainTabBarCoordinator: CoordinatorType {
         childCoordinators?.append(photosCoordinator)
         childCoordinators?.append(searchCoordinator)
         
-        childCoordinators?.forEach { $0.start() }
+        childCoordinators?.forEach {
+            $0.parantCoordinator = self
+            $0.start()
+        }
     }
 }

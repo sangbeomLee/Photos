@@ -26,7 +26,6 @@ class PhotoSearchCoordinator: CoordinatorType {
         let photoSearchViewController = PhotoSearchViewController()
         photoSearchViewController.coordinator = self
         
-        // TODO: - modal 방식의 변화
         navigationController?.pushViewController(photoSearchViewController, animated: true)
     }
     
@@ -35,7 +34,6 @@ class PhotoSearchCoordinator: CoordinatorType {
         photoDetailViewController.setPhotos(storage, now: currentIndex)
         photoDetailViewController.coordinator = self
         
-        // TODO: - modal 방식의 변화
         navigationController?.pushViewController(photoDetailViewController, animated: true)
     }
     
