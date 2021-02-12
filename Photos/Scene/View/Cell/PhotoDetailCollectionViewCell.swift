@@ -27,7 +27,7 @@ class PhotoDetailCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with photo: PhotoModel) {
-        photoImageView.image = photo.thumbImage
+        photoImageView.image = photo.thumbImage?.resizedImage(targetSize: frame.size)
     }
 }
 

@@ -138,10 +138,6 @@ private extension PhotoDetailViewController {
 extension PhotoDetailViewController: UICollectionViewDelegate {}
 
 extension PhotoDetailViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selectedItemAt: \(indexPath.row)")
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let storage = storage else { return 0 }
         
@@ -151,7 +147,7 @@ extension PhotoDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCollectionViewCell", for: indexPath) as? PhotoDetailCollectionViewCell,
               let storage = storage,
-              let photo = storage.photoFromList(at: indexPath.row) else {
+              let photo = storage.photos(at: indexPath.row) else {
             return UICollectionViewCell()
         }
         

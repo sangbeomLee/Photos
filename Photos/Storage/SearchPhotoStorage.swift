@@ -10,7 +10,7 @@ import UIKit
 class SearchPhotoStorage: Storage {
     var query: String?
     
-    override func photoFromList(at index: Int) -> PhotoModel? {
+    override func photos(at index: Int) -> PhotoModel? {
         if sholudDownloadNextPage(index: index), !isFetching {
             fetchSearchPhotos(with: query)
         }
@@ -28,7 +28,7 @@ class SearchPhotoStorage: Storage {
         
         isFetching = true
         
-        PhotoAPIProvider.shared.fetchSearchPhotos(for: query, page: nextPage) {[weak self] result in
+        APIProvider.shared.fetchSearchPhotos(for: query, page: nextPage) {[weak self] result in
             guard let self = self else { return }
             self.isFetching = false
             

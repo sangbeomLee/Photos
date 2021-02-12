@@ -8,13 +8,15 @@
 import UIKit
 
 class PhotoStorage: Storage {
+    let apiProvider = APIProvider.shared
+    
     override init() {
         super.init()
         
         fetchPhotos()
     }
  
-    override func photoFromList(at index: Int) -> PhotoModel? {
+    override func photos(at index: Int) -> PhotoModel? {
         if sholudDownloadNextPage(index: index), !isFetching {
             fetchPhotos()
         }
@@ -24,7 +26,8 @@ class PhotoStorage: Storage {
     
     func fetchPhotos() {
         isFetching = true
-        PhotoAPIProvider.shared.fetchPhotos(nextPage) {[weak self] result in
+        
+        apiProvider.fetchPhotos(nextPage) {[weak self] result in
             guard let self = self else { return }
             self.isFetching = false
             

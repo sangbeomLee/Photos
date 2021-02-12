@@ -44,12 +44,7 @@ class Storage {
         currentPage = 0
     }
     
-    // TODO: - 겹친다 더 나은 방법을 생각 해 보자.
-    func photoList() -> [PhotoModel] {
-        return photos
-    }
-    
-    func photoFromList(at index: Int) -> PhotoModel? {
+    func photos(at index: Int) -> PhotoModel? {
         return index > lastIndex ? nil : photos[index]
     }
 }

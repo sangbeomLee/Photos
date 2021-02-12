@@ -37,7 +37,7 @@
 		D3D0932C25D120C300CB56CA /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */; };
 		D3D0932D25D120C300CB56CA /* PhotosTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */; };
 		D3D0933225D12B0100CB56CA /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933125D12B0100CB56CA /* Downloader.swift */; };
-		D3D0933625D12BC500CB56CA /* PhotoAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933525D12BC500CB56CA /* PhotoAPIProvider.swift */; };
+		D3D0933625D12BC500CB56CA /* APIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933525D12BC500CB56CA /* APIProvider.swift */; };
 		D3D0933B25D134FC00CB56CA /* PhotoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933A25D134FC00CB56CA /* PhotoResponse.swift */; };
 		D3D0933E25D15AAC00CB56CA /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0933D25D15AAC00CB56CA /* PhotoModel.swift */; };
 		D3D0934125D1637700CB56CA /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0934025D1637700CB56CA /* APIKey.swift */; };
@@ -76,7 +76,7 @@
 		D3D0932A25D120C300CB56CA /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		D3D0932B25D120C300CB56CA /* PhotosTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotosTableViewCell.xib; sourceTree = "<group>"; };
 		D3D0933125D12B0100CB56CA /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
-		D3D0933525D12BC500CB56CA /* PhotoAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAPIProvider.swift; sourceTree = "<group>"; };
+		D3D0933525D12BC500CB56CA /* APIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProvider.swift; sourceTree = "<group>"; };
 		D3D0933A25D134FC00CB56CA /* PhotoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResponse.swift; sourceTree = "<group>"; };
 		D3D0933D25D15AAC00CB56CA /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		D3D0934025D1637700CB56CA /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				D3D0933125D12B0100CB56CA /* Downloader.swift */,
-				D3D0933525D12BC500CB56CA /* PhotoAPIProvider.swift */,
+				D3D0933525D12BC500CB56CA /* APIProvider.swift */,
 				D3D0934025D1637700CB56CA /* APIKey.swift */,
 				D389C5FC25D39FC70015589D /* APICenter.swift */,
 			);
@@ -362,7 +362,7 @@
 				D354256425D235D8006C449E /* UIImage+Extension.swift in Sources */,
 				D354257F25D2B1FF006C449E /* PhotoSearchCoordinator.swift in Sources */,
 				D3D092F625D104E400CB56CA /* TODO.swift in Sources */,
-				D3D0933625D12BC500CB56CA /* PhotoAPIProvider.swift in Sources */,
+				D3D0933625D12BC500CB56CA /* APIProvider.swift in Sources */,
 				D354257325D2ACDF006C449E /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

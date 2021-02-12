@@ -97,7 +97,7 @@ private extension PhotoSearchViewController {
 
 extension PhotoSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let photo = storage.photoFromList(at: indexPath.row), let image = photo.thumbImage else { return 0 }
+        guard let photo = storage.photos(at: indexPath.row), let image = photo.thumbImage else { return 0 }
         
         return tableView.frame.size.width * image.cropRatio
     }
@@ -116,7 +116,7 @@ extension PhotoSearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosTableViewCell", for: indexPath) as? PhotosTableViewCell,
-              let photo = storage.photoFromList(at: indexPath.row) else {
+              let photo = storage.photos(at: indexPath.row) else {
             // TODO: 오류처리
             return UITableViewCell()
         }
