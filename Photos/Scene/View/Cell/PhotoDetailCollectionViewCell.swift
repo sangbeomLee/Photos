@@ -31,6 +31,8 @@ class PhotoDetailCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Setup
+
 private extension PhotoDetailCollectionViewCell {
     func setupLayout() {
         contentView.addSubview(photoImageView)

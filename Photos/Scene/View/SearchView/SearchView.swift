@@ -36,6 +36,8 @@ class SearchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Make
+    
     static func make() -> SearchView {
         let searchView = SearchView()
         searchView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +45,7 @@ class SearchView: UIView {
         return searchView
     }
     
-    // MARK: - components
+    // MARK: - Components
     
     private var container: UIStackView = {
         let stackView = UIStackView()
@@ -105,6 +107,8 @@ class SearchView: UIView {
     }()
 }
 
+// MARK: - Setup
+
 private extension SearchView {
     func setupLayout() {
         addSubview(container)
@@ -131,7 +135,7 @@ private extension SearchView {
     }
 }
 
-// MARK: - objc Func
+// MARK: - Objc func
 
 @objc
 private extension SearchView {

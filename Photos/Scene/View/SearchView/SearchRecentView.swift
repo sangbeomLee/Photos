@@ -62,7 +62,7 @@ private extension SearchRecentView {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(SearchRecentTableViewCell.self, forCellReuseIdentifier: "SearchRecentTableViewCell")
+        tableView.register(PhotoSearchRecentTableViewCell.self, forCellReuseIdentifier: "SearchRecentTableViewCell")
         tableView.rowHeight = 40
     }
     
@@ -96,7 +96,7 @@ extension SearchRecentView: UITableViewDataSource {
     
     // TODO: UserDefaults 사용하기..
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchRecentTableViewCell", for: indexPath) as? SearchRecentTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchRecentTableViewCell", for: indexPath) as? PhotoSearchRecentTableViewCell else {
             return UITableViewCell()
         }
         

@@ -7,11 +7,14 @@
 
 import UIKit
 
+private enum Constant {
+    static var subtitle: String { "Sponsor" }
+}
+
 class PhotosTableViewCell: UITableViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    // TODO: - 정리하기 -> 어떻게 self resizing 을 할까 하다가 이런 식으로 적용했다.
     @IBOutlet weak var photoImageViewHeightConstraint: NSLayoutConstraint!
  
     override func awakeFromNib() {
@@ -26,11 +29,13 @@ class PhotosTableViewCell: UITableViewCell {
     
     func configure(by photo: PhotoModel) {
         titleLabel.text = photo.userName
-        subtitleLabel.text = "Sponsor"
+        subtitleLabel.text = Constant.subtitle
         photoImageView.image = photo.image?.resizedImage(targetSize: contentView.frame.size)
         subtitleLabel.isHidden = photo.isSponsor ? false : true
     }
 }
+
+// MARK: - Setup
 
 private extension PhotosTableViewCell {
     func setupView() {
