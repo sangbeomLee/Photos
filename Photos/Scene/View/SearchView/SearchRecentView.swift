@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Constant {
+    static let cellIdentifier: String = "SearchRecentTableViewCell"
+}
+
 class SearchRecentView: UIView {
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -20,8 +24,12 @@ class SearchRecentView: UIView {
     private lazy var headerView = SearchRecentHeaderView()
     
     private var searchList: [String] {
-        UserDefaults.standard.object(forKey: "recentSearchList") as? [String] ?? []
+        UserDefaults.standard.object(forKey: UserDefaultsKeys.recentSearchList) as? [String] ?? []
     }
+    
+    // MARK: - Block Action
+    
+    var recentCellAction: ((_ text: String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,11 +39,9 @@ class SearchRecentView: UIView {
         headerView.buttonAction = setClearButtonAction
     }
     
-    var recentCellAction: ((_ text: String) -> Void)?
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Make
     
     static func make() -> SearchRecentView {
         let recentView = SearchRecentView()
@@ -54,6 +60,8 @@ class SearchRecentView: UIView {
     }
 }
 
+// MARK: - Setup
+
 private extension SearchRecentView {
     func setupView() {
         setupTableView()
@@ -62,7 +70,7 @@ private extension SearchRecentView {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(PhotoSearchRecentTableViewCell.self, forCellReuseIdentifier: "SearchRecentTableViewCell")
+        tableView.register(PhotoSearchRecentTableViewCell.self, forCellReuseIdentifier: Constant.cellIdentifier)
         tableView.rowHeight = 40
     }
     
@@ -78,12 +86,16 @@ private extension SearchRecentView {
     }
     
     func setClearButtonAction() {
-        UserDefaults.standard.removeObject(forKey: "recentSearchList")
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.recentSearchList)
         tableView.reloadData()
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension SearchRecentView: UITableViewDelegate {}
+
+// MARK: - UITableViewDataSource
 
 extension SearchRecentView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,7 +108,7 @@ extension SearchRecentView: UITableViewDataSource {
     
     // TODO: UserDefaults 사용하기..
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchRecentTableViewCell", for: indexPath) as? PhotoSearchRecentTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constant.cellIdentifier, for: indexPath) as? PhotoSearchRecentTableViewCell else {
             return UITableViewCell()
         }
         

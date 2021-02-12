@@ -7,11 +7,15 @@
 
 import UIKit
 
+private enum Constant {
+    static var title: String { "Loading..."}
+}
+
 class LoadingView: UIView {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "NOW LOADING"
+        label.text = Constant.title
         label.textColor = .white
         label.font = .systemFont(ofSize: 24)
         
@@ -31,6 +35,8 @@ class LoadingView: UIView {
         setupLayout()
     }
 }
+
+// MARK: - Setup
 
 private extension LoadingView {
     func setupView() {

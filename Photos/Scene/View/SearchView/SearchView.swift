@@ -7,6 +7,18 @@
 
 import UIKit
 
+private enum Constant {
+    static var searchButtonTitle: String { "Search" }
+    static var placeHolder: String { "Search" }
+}
+
+private enum Design {
+    static let radius: CGFloat = 8.0
+    static let cancleButtonWidth: CGFloat = 60.0
+    static let textFieldFont = UIFont.boldSystemFont(ofSize: 18.0)
+    static let searchImage = UIImage(named: "searchIcon")
+}
+
 protocol SearchViewDelegate: AnyObject {
     func searchButtonDidTapped(text: String?)
     func textFieldDidChange(text: String?)
@@ -69,15 +81,14 @@ class SearchView: UIView {
         let view = UIView()
         view.backgroundColor = .darkGray
         view.clipsToBounds = true
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = Design.radius
         
         return view
     }()
 
     // TODO: - convension 찾아보자.
     private var searchImageView: UIImageView = {
-        
-        let imageView = UIImageView(image: UIImage(named: "searchIcon")?.withRenderingMode(.alwaysTemplate))
+        let imageView = UIImageView(image: Design.searchImage?.withRenderingMode(.alwaysTemplate))
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
                 
@@ -87,9 +98,9 @@ class SearchView: UIView {
     private var textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.font = .systemFont(ofSize: 20)
+        textField.font = Design.textFieldFont
         textField.textColor = .white
-        textField.placeholder = "Search"
+        textField.placeholder = Constant.placeHolder
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         return textField
@@ -97,10 +108,10 @@ class SearchView: UIView {
     
     private var searchButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Search", for: .normal)
+        button.setTitle(Constant.searchButtonTitle, for: .normal)
         button.backgroundColor = .blue
         button.clipsToBounds = true
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = Design.radius
         button.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
         
         return button
@@ -130,7 +141,7 @@ private extension SearchView {
             searchContainer.trailingAnchor.constraint(equalTo: searchAreaView.trailingAnchor, constant: -4),
             
             searchImageView.widthAnchor.constraint(equalTo: searchImageView.heightAnchor),
-            searchButton.widthAnchor.constraint(equalToConstant: 60)
+            searchButton.widthAnchor.constraint(equalToConstant: Design.cancleButtonWidth)
         ])
     }
 }
@@ -140,12 +151,11 @@ private extension SearchView {
 @objc
 private extension SearchView {
     func buttonDidTapped(button: UIButton) {
-        // text 가 nil 이거나 empty 라면 return
         guard let text = text, !text.isEmpty else { return }
         
-        var recentSearchList = UserDefaults.standard.object(forKey: "recentSearchList") as? [String] ?? []
+        var recentSearchList = UserDefaults.standard.object(forKey: UserDefaultsKeys.recentSearchList) as? [String] ?? []
         recentSearchList.append(text)
-        UserDefaults.standard.set(recentSearchList, forKey: "recentSearchList")
+        UserDefaults.standard.set(recentSearchList, forKey: UserDefaultsKeys.recentSearchList)
 
         delegate?.searchButtonDidTapped(text: text)
     }
