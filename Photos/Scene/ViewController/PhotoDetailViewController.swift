@@ -60,6 +60,10 @@ final class PhotoDetailViewController: UIViewController {
         setupLayout()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     // MARK: - Func
     
     func setPhotos(_ storage: Storage, now currentIndex: Int) {

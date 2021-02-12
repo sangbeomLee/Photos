@@ -31,6 +31,9 @@ class PhotosViewController: UIViewController {
         setupView()
         setupStorage()
     }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
 }
 
 // MARK: - Setup
@@ -43,7 +46,7 @@ private extension PhotosViewController {
     
     func setupNavigation() {
         navigationItem.title = Constant.navigationTitle
-        navigationController?.navigationBar.barTintColor = .clear
+        navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = false
         // TODO: - Font 추가

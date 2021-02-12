@@ -43,6 +43,10 @@ class PhotoSearchViewController: UIViewController {
         setupLayout()
         recentView.recentCellAction = recentViewAction(text:)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
 }
 
 // MARK: - Setup
