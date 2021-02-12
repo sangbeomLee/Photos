@@ -27,7 +27,7 @@ class PhotosTableViewCell: UITableViewCell {
     func configure(by photo: PhotoModel) {
         titleLabel.text = photo.userName
         subtitleLabel.text = "Sponsor"
-        photoImageView.image = photo.thumbImage?.resizedImage(targetSize: contentView.frame.size)
+        photoImageView.image = photo.image?.resizedImage(targetSize: contentView.frame.size)
         subtitleLabel.isHidden = photo.isSponsor ? false : true
     }
 }

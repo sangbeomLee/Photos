@@ -103,13 +103,13 @@ private extension APIProvider {
         
         photoModels.enumerated().forEach {[weak self] (index, photo) in
             // TODO: - 없을때 처리 -> 딱히 안해줘도 되려나
-            guard let url = photo.regularUrl else { return }
+            guard let url = photo.url else { return }
             
             dispatchGroup.enter()
             self?.downloadImage(from: url) { result in
                 switch result {
                 case .success(let image):
-                    photoModels[index].thumbImage = image
+                    photoModels[index].image = image
                 case .failure(let error):
                     print(error)
                 }

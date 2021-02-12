@@ -9,16 +9,14 @@ import UIKit
 
 struct PhotoModel {
     let id: String
-    let thumbUrl: URL?
-    let regularUrl: URL?
+    let url: URL?
     let isSponsor: Bool
     let userName: String
-    var thumbImage: UIImage? = nil
+    var image: UIImage? = nil
     
     init(response: PhotoResponse) {
         id = response.id
-        thumbUrl = URL(string: response.urls.thumb)
-        regularUrl = URL(string: response.urls.regular)
+        url = URL(string: response.urls.regular)
         isSponsor = response.sponsorship != nil
         userName = response.user.name
     }

@@ -97,7 +97,7 @@ private extension PhotoSearchViewController {
 
 extension PhotoSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let photo = storage.photos(at: indexPath.row), let image = photo.thumbImage else { return 0 }
+        guard let photo = storage.photos(at: indexPath.row), let image = photo.image else { return 0 }
         
         return tableView.frame.size.width * image.cropRatio
     }

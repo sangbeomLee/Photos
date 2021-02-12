@@ -20,7 +20,6 @@ struct PhotoResponse: Codable {
     
     struct Urls: Codable {
         let regular: String
-        let thumb: String
     }
     
     struct Sponsorship: Codable {}
