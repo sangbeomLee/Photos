@@ -23,9 +23,6 @@ extension UIImage {
             newSize = CGSize(width: size.width * widthRaito, height: size.height * widthRaito)
         }
         
-        // TODO: - 어떤 원리로 resizing 하는지 알아보자.
-        // Actually do the resizing to the rect using the ImageContext stuff
-        
         let renderFormat = UIGraphicsImageRendererFormat.default()
         let renderer = UIGraphicsImageRenderer(size: newSize, format: renderFormat)
         

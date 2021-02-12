@@ -10,7 +10,7 @@ import UIKit
 // MARK: - private enum
 
 private enum Constant {
-    static let http: String = "http"
+    static let http: String = "https"
     static let host: String = "api.unsplash.com"
     
     static let perPageCount: Int = 10

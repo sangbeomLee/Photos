@@ -15,12 +15,14 @@ class MainTabBarCoordinator: CoordinatorType {
     
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
-        // TODO: - 이후에 다 정리할 것
         childCoordinators = []
     }
     
     func start() {
-        let photosNavigationController = navigationController!
+        guard let navigationController = navigationController else { return }
+        tabBarController?.coordinator = self
+        
+        let photosNavigationController = navigationController
         photosNavigationController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
         let photosCoordinator = PhotosCoordinator(navigationController: photosNavigationController)
         

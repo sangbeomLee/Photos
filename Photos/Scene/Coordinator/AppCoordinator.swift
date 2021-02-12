@@ -11,11 +11,17 @@ class AppCoordinator: CoordinatorType {
     var parantCoordinator: CoordinatorType? = nil
     var childCoordinators: [CoordinatorType]? = [CoordinatorType]()
     var navigationController: UINavigationController? = UINavigationController()
+    var mainController: UIViewController?
     
     func start() {
         let childCoordinator = MainTabBarCoordinator(navigationController: navigationController)
         childCoordinator.parantCoordinator = self
         childCoordinators?.append(childCoordinator)
+        
+        let mainTabBarController = MainTabBarController()
+        mainController = mainTabBarController
+        
+        childCoordinator.tabBarController = mainTabBarController
         
         childCoordinator.start()
     }
