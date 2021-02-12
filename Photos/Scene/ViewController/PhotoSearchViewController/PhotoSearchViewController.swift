@@ -150,9 +150,10 @@ extension PhotoSearchViewController: StorageDelegate {
     func didFinishFetchPhotos(error: Error?) {
         guard error == nil else {
             print("error")
-            coordinator?.showAlert()
+            coordinator?.showAlert(with: error!)
             return
         }
+        
         recentView.show(false)
         
         tableView.reloadData()

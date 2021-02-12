@@ -16,8 +16,22 @@ protocol CoordinatorType: AnyObject {
 }
 
 extension CoordinatorType {
-    func showAlert() {
-        let errorAlert = ErrorAlertController.make()
+    func showAlert(with error: Error) {
+        let errorAlert = ErrorAlertController.make(with: description(error))
         navigationController?.present(errorAlert, animated: true, completion: nil)
+    }
+    
+    private func description(_ error: Error) -> String {
+        let description: String
+        
+        if let downloaderError = error as? DownloaderError {
+            description = downloaderError.description
+        } else if let apiError = error as? APIError {
+            description = apiError.description
+        } else {
+            description = error.localizedDescription
+        }
+        
+        return description
     }
 }

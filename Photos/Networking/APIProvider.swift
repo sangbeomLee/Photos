@@ -11,7 +11,16 @@ enum APIError: Error {
     case parseJsonError
     case downloadImageError
     case requestError
-    case noMoreData
+    case noMoreDataError
+    
+    var description: String {
+        switch self {
+        case .noMoreDataError:
+            return "이미지가 더이상 없습니다."
+        default:
+            return "APIError: \(self)"
+        }
+    }
 }
 
 class APIProvider {
@@ -37,7 +46,7 @@ class APIProvider {
                 let photoModels = photosResponse.map { PhotoModel(response: $0) }
                 
                 if photoModels.isEmpty {
-                    completion(FetchResult.failure(APIError.noMoreData))
+                    completion(FetchResult.failure(APIError.noMoreDataError))
                     return
                 }
                 
@@ -62,7 +71,7 @@ class APIProvider {
                 let photoModels = searchPhotoResponse.results.map { PhotoModel(response: $0) }
  
                 if photoModels.isEmpty {
-                    completion(FetchResult.failure(APIError.noMoreData))
+                    completion(FetchResult.failure(APIError.noMoreDataError))
                     return
                 }
                 

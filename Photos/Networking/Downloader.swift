@@ -11,12 +11,7 @@ enum DownloaderError: Error {
     case unownedError
     
     var description: String {
-        switch self {
-        case .responseError:
-            return "다운로드 중 잘못된 응답을 받았습니다."
-        case .unownedError:
-            return "다운로드 중 알수없는 오류가 있습니다."
-        }
+        return "DownloaderError: \(self)"
     }
 }
 
