@@ -39,7 +39,7 @@ final class PhotoDetailViewController: UIViewController {
         return collectionView
     }()
     
-    private var cancleButton: UIButton = {
+    private let cancleButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(Design.cancelImage?.withRenderingMode(.alwaysTemplate), for: .normal)

@@ -18,7 +18,7 @@ class SearchRecentHeaderView: UIView {
         return label
     }()
     
-    private var clearButton: UIButton = {
+    private let clearButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Clear", for: .normal)
