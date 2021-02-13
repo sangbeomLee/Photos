@@ -16,7 +16,9 @@ protocol CoordinatorType: AnyObject {
 }
 
 extension CoordinatorType {
-    func showAlert(with error: Error) {
+    func showAlert(with error: Error?) {
+        guard let error = error else { return }
+        
         let errorAlert = ErrorAlertController.make(with: description(error))
         navigationController?.present(errorAlert, animated: true, completion: nil)
     }

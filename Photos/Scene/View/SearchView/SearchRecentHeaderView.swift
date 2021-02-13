@@ -33,7 +33,7 @@ class SearchRecentHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print(isUserInteractionEnabled)
+        
         setupView()
         setupLayout()
     }

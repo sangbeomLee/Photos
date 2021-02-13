@@ -31,6 +31,7 @@ class PhotosViewController: UIViewController {
         setupView()
         setupStorage()
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
@@ -49,7 +50,6 @@ private extension PhotosViewController {
         navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = false
-        // TODO: - Font 추가
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.hidesBarsOnSwipe = true
     }
@@ -106,6 +106,11 @@ extension PhotosViewController: UITableViewDataSource {
 
 extension PhotosViewController: StorageDelegate {
     func didFinishFetchPhotos(error: Error?) {
+        guard error == nil else {
+            coordinator?.showAlert(with: error)
+            return
+        }
+
         if !loadingView.isHidden {
             loadingView.isHidden = true
         }

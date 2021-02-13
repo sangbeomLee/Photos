@@ -32,7 +32,7 @@ class Downloader {
                 completion(DownloadedDataResult.failure(DownloaderError.unownedError))
                 return
             }
-
+            
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == HTTPStatus.success.code else {
                 completion(DownloadedDataResult.failure(DownloaderError.responseError))
                 return

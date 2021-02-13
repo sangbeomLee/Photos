@@ -166,7 +166,7 @@ extension PhotoSearchViewController: SearchViewDelegate {
 extension PhotoSearchViewController: StorageDelegate {
     func didFinishFetchPhotos(error: Error?) {
         guard error == nil else {
-            coordinator?.showAlert(with: error!)
+            coordinator?.showAlert(with: error)
             return
         }
         
