@@ -20,7 +20,7 @@
 - Coordinator pattern 적용
 - Cell 에서 Networking 을 하기보다 따로 관리하여 부드러운 이미지 처리 결과 고려
 - private 할 수 있는 것은 최대한 private 하게 작성
-- Xib, code 를 통한 UI 작업을 보여주기 위해 두가지 경우 모두 작성 (ex - PhotosViewController.xib), (ex - PhotoSearchViewController)
+- Xib, code 를 통한 UI 작업을 보여주기 위해 두가지 경우 모두 작성
 - image 처리 중 memory 사용량에 대한 고민
 - massive 한 ViewController 가 되지 않도록 최대한 작업을 나누었습니다.
 - TabBarController 적용
