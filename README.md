@@ -12,8 +12,25 @@
 
 ## 기능
 
-- 과제로 주어진 기능과 동일
-- 사진 검색 후 기록을 표시
+> 요구조건 유출이 우려되어 제시된 요구사항 외의 정보만 작성 하였습니다. 요구 조건은 모두 충족합니다.
+
+### Photo list
+
+<img src="https://user-images.githubusercontent.com/37286026/107846584-3876f780-6e28-11eb-820a-f0d51853c391.png" width="200">
+
+### Photo
+
+<img src="https://user-images.githubusercontent.com/37286026/107846586-39a82480-6e28-11eb-84d3-234eefbdc30f.png" width="200">
+
+- 화면 터치 후 닫기 버튼이 나옵니다. 이를 통하여 리스트로 이동 가능.
+
+### Search
+
+<img src="https://user-images.githubusercontent.com/37286026/107846587-3b71e800-6e28-11eb-9c6a-c40de902da4d.png" width="200">
+
+- 사용자가 검색했던 list 를 보여줍니다.
+- 해당 list 를 터치할 시 text 에 맞는 검색 리스트가 보여집니다.
+- 검색창의 모든 글자를 지우면 검색기록 화면이 보여집니다.
 
 ## 고려한 점
 
