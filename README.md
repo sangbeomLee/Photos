@@ -1,18 +1,12 @@
 # Photos App
 
-> Kakaopay iOS 사전 과제
-
-사진 API 를 사용하여 요구사항을 충족하는 앱을 만들기.
+사진 API 를 사용하여 앱 만들기.
 
 ## 화면 동작
 
 > 스크린샷을 누르면 Youtube 영상으로 이동합니다. 
 
 [![Video Label](http://img.youtube.com/vi/P5-yaIQWo68/0.jpg)](https://youtu.be/P5-yaIQWo68?t=0s)
-
-## 기능
-
-> 요구조건 유출이 우려되어 제시된 요구사항 외의 정보만 작성 하였습니다. 요구 조건은 모두 충족합니다.
 
 ### Photo list
 
